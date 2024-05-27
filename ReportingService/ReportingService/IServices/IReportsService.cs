@@ -2,7 +2,7 @@
 
 namespace ReportingService.Bll.IServices;
 
-public interface IReportServices
+public interface IReportsService
 {
     ReportDto GetReportById(Guid id);
 }

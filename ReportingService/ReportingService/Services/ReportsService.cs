@@ -6,13 +6,13 @@ using ReportingService.Core.Dtos;
 
 namespace ReportingService.Bll.Services;
 
-public class ReportServices: IReportServices
+public class ReportsService: IReportsService
 {
     private readonly IReportRepository _reportRepository;
-    private readonly ILogger _logger = Log.ForContext<ReportServices>();
+    private readonly ILogger _logger = Log.ForContext<ReportsService>();
     private readonly IMapper _mapper;
 
-    public ReportServices(IReportRepository reportRepository, IMapper mapper)
+    public ReportsService(IReportRepository reportRepository, IMapper mapper)
     {
         _mapper = mapper;
         _reportRepository = reportRepository;

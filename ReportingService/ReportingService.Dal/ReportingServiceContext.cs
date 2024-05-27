@@ -17,10 +17,30 @@ public class ReportingServiceContext(DbContextOptions<ReportingServiceContext> o
             .HasMany(l => l.Accounts)
             .WithOne(a => a.Leads);
 
+        modelBuilder.Entity<LeadDto>()
+            .Property(a => a.Address)
+            .HasColumnType("nvarchar(50)"); ;
+
+        modelBuilder.Entity<LeadDto>()
+            .Property(a => a.Mail)
+            .HasColumnType("nvarchar(30)");
+
+        modelBuilder.Entity<LeadDto>()
+            .Property(a => a.Name)
+            .HasColumnType("nvarchar(30)");
+
+        modelBuilder.Entity<LeadDto>()
+            .Property(a => a.Phone)
+            .HasColumnType("nvarchar(12)");
+
         modelBuilder
             .Entity<AccountDto>()
             .HasMany(a => a.Transactions)
-            .WithOne(t => t.AccountsId);
+            .WithOne(t => t.AccountId);
+
+        modelBuilder.Entity<TransactionDto>()
+            .Property(a => a.Amount)
+            .HasPrecision(11, 4);
 
         modelBuilder.HasPostgresEnum<AccountStatus>();
         modelBuilder.HasPostgresEnum<CurrencyType>();
