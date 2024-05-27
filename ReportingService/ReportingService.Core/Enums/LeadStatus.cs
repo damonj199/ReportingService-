@@ -1,4 +1,4 @@
-﻿namespace ReportingService.Core.Emums;
+﻿namespace ReportingService.Core.Enums;
 
 public enum LeadStatus
 {

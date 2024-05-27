@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportingService.Core.Dtos;
-using ReportingService.Core.Emums;
+using ReportingService.Core.Enums;
 
 namespace ReportingService.Dal;
 
 public class ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : DbContext(options)
 {
-    public DbSet<AccountsDto> Accounts { get; set; }
-    public DbSet<LeadsDto> Leads { get; set; }
-    public DbSet<TransactionsDto> Transactions {  get; set; }
+    public DbSet<AccountDto> Accounts { get; set; }
+    public DbSet<LeadDto> Leads { get; set; }
+    public DbSet<TransactionDto> Transactions {  get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .Entity<LeadsDto>()
+            .Entity<LeadDto>()
             .HasMany(l => l.Accounts)
             .WithOne(a => a.Leads);
 
         modelBuilder
-            .Entity<AccountsDto>()
+            .Entity<AccountDto>()
             .HasMany(a => a.Transactions)
             .WithOne(t => t.AccountsId);
 
