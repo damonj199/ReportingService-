@@ -8,8 +8,8 @@ public class ReportRepository : BaseRepository
     {
     }
 
-    public ReportDto GetReportById(Guid id)
-    {
-        return _cxt
-    }
+    //public ReportDto GetReportById(Guid id)
+    //{
+    //    return _cxt
+    //}
 }

@@ -19,7 +19,7 @@ namespace ReportingService.Api.Controllers
         [HttpGet()]
         public ActionResult<Guid> GetReportById()
         {
-            return Ok(_reportsService.GetReportById());
+            return Ok();
         }
     }
 }
