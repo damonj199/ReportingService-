@@ -21,7 +21,7 @@ public class TransactionsService : ITransactionsService
 
     public List<TransactionResponse> GetInformationAllTransaction()
     {
-        _logger.Information("GetCats - CatsService");
+        _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
         return _mapper.Map<List<TransactionResponse>>(_trunsactionRepository.GetInformationAllTransaction());
 
     }

@@ -15,7 +15,7 @@ namespace ReportingService.Dal.Repository
 
         public List<TransactionDto> GetInformationAllTransaction()
         {
-            //return new List<TransactionDto> { new TransactionDto( ) };
+            _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
             return _cxt.Transactions.ToList();
         }
     }
