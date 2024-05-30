@@ -4,12 +4,15 @@ using ReportingService.Core.Enums;
 
 namespace ReportingService.Dal;
 
-public class ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : DbContext(options)
+public class ReportingServiceContext : DbContext
 {
     public DbSet<AccountDto> Accounts { get; set; }
     public DbSet<LeadDto> Leads { get; set; }
     public DbSet<TransactionDto> Transactions {  get; set; }
 
+    public ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : base(options)
+    {
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -33,10 +36,10 @@ public class ReportingServiceContext(DbContextOptions<ReportingServiceContext> o
             .Property(a => a.Phone)
             .HasColumnType("nvarchar(12)");
 
-        modelBuilder
-            .Entity<AccountDto>()
-            .HasMany(a => a.Transactions)
-            .WithOne(t => t.AccountId);
+        //modelBuilder
+        //    .Entity<AccountDto>()
+        //    .HasMany(a => a.Transactions)
+        //    .WithOne(t => t.AccountId);
 
         modelBuilder.Entity<TransactionDto>()
             .Property(a => a.Amount)

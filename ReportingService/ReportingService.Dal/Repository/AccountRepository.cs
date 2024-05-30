@@ -12,6 +12,7 @@ public class AccountRepository: BaseRepository
 
     public AccountDto GetAccountByLeadId(Guid leadId)
     {
-        return _cxt.Leads.Include(x => x.Accounts).FirstOrDefault(a => a.Id == id);
+        //return _cxt.Leads.Include(x => x.Accounts).FirstOrDefault(a => a.Id == leadId);
+        return new AccountDto();
     }
 }

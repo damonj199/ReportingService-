@@ -5,7 +5,7 @@ namespace ReportingService.Api.Configure;
 
 public static class DataBaseExtansions
 {
-    public static void ConfigureDataBase(this IServiceCollection services, ConfigurationManager configurationManager)
+    public static void ConfigureDB(this IServiceCollection services, ConfigurationManager configurationManager)
     {
         services.AddDbContext<ReportingServiceContext>(
             options => options

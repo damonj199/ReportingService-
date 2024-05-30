@@ -12,6 +12,6 @@ public class AccountsService
 
     public AccountDto GetAccountByLeadId(Guid leadId)
     {
-        
+        return new AccountDto();
     }
 }
