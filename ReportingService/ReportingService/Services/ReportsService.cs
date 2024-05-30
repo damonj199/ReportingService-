@@ -18,8 +18,8 @@ public class ReportsService: IReportsService
         _reportRepository = reportRepository;
     }
 
-    public ReportDto GetReportById(Guid id)
-    {
-        return _reportRepository.GetReportById(id);
-    }
+    //public ReportDto GetReportById(Guid id)
+    //{
+    //    return _reportRepository.GetReportById(id);
+    //}
 }

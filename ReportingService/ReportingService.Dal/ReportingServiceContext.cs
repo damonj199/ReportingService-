@@ -9,12 +9,17 @@ public class ReportingServiceContext : DbContext
     public DbSet<AccountDto> Accounts { get; set; }
     public DbSet<LeadDto> Leads { get; set; }
     public DbSet<TransactionDto> Transactions {  get; set; }
+    public DbSet<StatusHistoryDto> StatusHistory { get; set; }
 
     public ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : base(options)
     {
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<StatusHistoryDto>()
+            .HasOne(s => s.Lead)
+            .WithMany(l => l.StatusHistory);
+
         modelBuilder
             .Entity<LeadDto>()
             .HasMany(l => l.Accounts)
@@ -22,24 +27,36 @@ public class ReportingServiceContext : DbContext
 
         modelBuilder.Entity<LeadDto>()
             .Property(a => a.Address)
-            .HasColumnType("nvarchar(50)"); ;
+            .IsRequired()
+            .HasMaxLength(50)
+            .HasColumnType("character varying(50)")
+            .HasColumnName("address"); ;
 
         modelBuilder.Entity<LeadDto>()
             .Property(a => a.Mail)
-            .HasColumnType("nvarchar(30)");
+            .IsRequired()
+            .HasMaxLength(30)
+            .HasColumnType("character varying(30)")
+            .HasColumnName("mail");
 
         modelBuilder.Entity<LeadDto>()
             .Property(a => a.Name)
-            .HasColumnType("nvarchar(30)");
+            .IsRequired()
+            .HasMaxLength(30)
+            .HasColumnType("character varying(30)")
+            .HasColumnName("name");
 
         modelBuilder.Entity<LeadDto>()
             .Property(a => a.Phone)
-            .HasColumnType("nvarchar(12)");
+            .IsRequired()
+            .HasMaxLength(12)
+            .HasColumnType("character varying(12)")
+            .HasColumnName("phone");
 
-        //modelBuilder
-        //    .Entity<AccountDto>()
-        //    .HasMany(a => a.Transactions)
-        //    .WithOne(t => t.AccountId);
+        modelBuilder
+            .Entity<AccountDto>()
+            .HasMany(a => a.Transactions)
+            .WithOne(t => t.Account);
 
         modelBuilder.Entity<TransactionDto>()
             .Property(a => a.Amount)

@@ -4,5 +4,5 @@ namespace ReportingService.Bll.IServices;
 
 public interface IAccountsService
 {
-    AccountDto GetAccountByLeadId(Guid leadId);
+    LeadDto GetAccountByLeadId(Guid Id);
 }

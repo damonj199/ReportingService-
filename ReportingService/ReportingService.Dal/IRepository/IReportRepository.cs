@@ -3,5 +3,5 @@ namespace ReportingService.Dal.IRepository;
 
 public interface IReportRepository
 {
-    ReportDto GetReportById(Guid id);
+    //ReportDto GetReportById(Guid id);
 }

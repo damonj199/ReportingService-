@@ -1,15 +1,10 @@
 ﻿using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportingService.Dal.Repository
 {
-    public  class TransactiontRepository : BaseRepository, ITransactiontRepository
+    public class TransactiontRepository : BaseRepository, ITransactiontRepository
     {
         private readonly ILogger _logger = Log.ForContext<TransactiontRepository>();
 

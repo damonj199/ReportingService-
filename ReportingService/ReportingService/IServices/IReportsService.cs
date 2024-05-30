@@ -4,5 +4,5 @@ namespace ReportingService.Bll.IServices;
 
 public interface IReportsService
 {
-    ReportDto GetReportById(Guid id);
+    //ReportDto GetReportById(Guid id);
 }

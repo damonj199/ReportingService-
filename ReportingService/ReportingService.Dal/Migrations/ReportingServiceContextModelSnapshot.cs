@@ -63,7 +63,8 @@ namespace ReportingService.Dal.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("address");
 
                     b.Property<DateOnly>("BirthDate")
@@ -72,17 +73,20 @@ namespace ReportingService.Dal.Migrations
 
                     b.Property<string>("Mail")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
                         .HasColumnName("mail");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)")
                         .HasColumnName("name");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(12)
+                        .HasColumnType("character varying(12)")
                         .HasColumnName("phone");
 
                     b.Property<int>("Status")
@@ -95,6 +99,34 @@ namespace ReportingService.Dal.Migrations
                     b.ToTable("leads", (string)null);
                 });
 
+            modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_date");
+
+                    b.Property<Guid>("LeadId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("lead_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_status_history");
+
+                    b.HasIndex("LeadId")
+                        .HasDatabaseName("ix_status_history_lead_id");
+
+                    b.ToTable("status_history", (string)null);
+                });
+
             modelBuilder.Entity("ReportingService.Core.Dtos.TransactionDto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -102,13 +134,18 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("AccountsIdId")
+                    b.Property<Guid>("AccountId")
                         .HasColumnType("uuid")
-                        .HasColumnName("accounts_id_id");
+                        .HasColumnName("account_id");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("numeric")
+                        .HasPrecision(11, 4)
+                        .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
+
+                    b.Property<double>("Commission")
+                        .HasColumnType("double precision")
+                        .HasColumnName("commission");
 
                     b.Property<int>("CurrencyType")
                         .HasColumnType("integer")
@@ -125,8 +162,8 @@ namespace ReportingService.Dal.Migrations
                     b.HasKey("Id")
                         .HasName("pk_transactions");
 
-                    b.HasIndex("AccountsIdId")
-                        .HasDatabaseName("ix_transactions_accounts_id_id");
+                    b.HasIndex("AccountId")
+                        .HasDatabaseName("ix_transactions_account_id");
 
                     b.ToTable("transactions", (string)null);
                 });
@@ -143,16 +180,28 @@ namespace ReportingService.Dal.Migrations
                     b.Navigation("Leads");
                 });
 
-            modelBuilder.Entity("ReportingService.Core.Dtos.TransactionDto", b =>
+            modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>
                 {
-                    b.HasOne("ReportingService.Core.Dtos.AccountDto", "AccountsId")
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountsIdId")
+                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Lead")
+                        .WithMany("StatusHistory")
+                        .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_transactions_accounts_accounts_id_id");
+                        .HasConstraintName("fk_status_history_leads_lead_id");
 
-                    b.Navigation("AccountsId");
+                    b.Navigation("Lead");
+                });
+
+            modelBuilder.Entity("ReportingService.Core.Dtos.TransactionDto", b =>
+                {
+                    b.HasOne("ReportingService.Core.Dtos.AccountDto", "Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_transactions_accounts_account_id");
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("ReportingService.Core.Dtos.AccountDto", b =>
@@ -163,6 +212,8 @@ namespace ReportingService.Dal.Migrations
             modelBuilder.Entity("ReportingService.Core.Dtos.LeadDto", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("StatusHistory");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,5 +4,5 @@ namespace ReportingService.Dal.IRepository;
 
 public interface IAccountRepository
 {
-    AccountDto GetAccountByLeadId(Guid leadid);
+    LeadDto GetAccountByLeadId(Guid id);
 }

@@ -14,4 +14,5 @@ public class LeadDto
     public DateOnly BirthDate { get; set; }
     public LeadStatus Status { get; set; }
     public List<AccountDto> Accounts { get; set; }
+    public List<StatusHistoryDto> StatusHistory { get; set; }
 }

@@ -7,7 +7,7 @@ public static class ConfigureServices
 {
     public static void ConfigureDalServices(this IServiceCollection services)
     {
-        //services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
         //services.AddScoped<IReportRepository, ReportRepository>();
         services.AddScoped<ITransactiontRepository, TransactiontRepository>();
     }

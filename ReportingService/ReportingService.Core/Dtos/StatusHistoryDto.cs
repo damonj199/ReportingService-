@@ -2,7 +2,7 @@
 
 namespace ReportingService.Core.Dtos;
 
-public class StatusHistory
+public class StatusHistoryDto
 {
     public Guid Id { get; set; }
     public LeadDto Lead { get; set; }
