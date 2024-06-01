@@ -1,9 +1,8 @@
 ﻿using ReportingService.Bll.Models.Responses;
 
-namespace ReportingService.Bll.IServices
+namespace ReportingService.Bll.IServices;
+
+public interface ITransactionsService
 {
-    public interface ITransactionsService
-    {
-        public List<TransactionResponse> GetInformationAllTransaction();
-    }
+    public List<TransactionResponse> GetInformationAllTransaction();
 }
