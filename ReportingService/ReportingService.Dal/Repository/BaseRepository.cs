@@ -3,8 +3,8 @@
 public class BaseRepository
 {
     protected readonly ReportingServiceContext _cxt;
-    public BaseRepository(ReportingServiceContext context)
+    public BaseRepository(ReportingServiceContext connectionString)
     {
-        _cxt = context;
+        _cxt = connectionString;
     }
 }

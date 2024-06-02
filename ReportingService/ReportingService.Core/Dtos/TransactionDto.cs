@@ -1,15 +1,15 @@
-﻿using ReportingService.Core.Emums;
+﻿using ReportingService.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace ReportingService.Core.Dtos;
 
-public class TransactionsDto
+public class TransactionDto
 {
-    [Key]
     public Guid Id { get; set; }
-    public AccountsDto AccountsId { get; set; }
+    public AccountDto Account { get; set; }
     public TransactionType TransactionType { get; set; }
     public CurrencyType CurrencyType { get; set; }
-    public int Amount { get; set; }
+    public double Commission { get; set; }
+    public decimal Amount { get; set; }
     public DateTime Date { get; set; }
 }

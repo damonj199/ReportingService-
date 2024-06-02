@@ -1,9 +1,18 @@
 using ReportingService.Api.Configure;
+using ReportingService.Bll;
+using ReportingService.Core.Models.Requestes;
+using ReportingService.Core.Models.Responses;
+using ReportingService.Dal;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.ConfigureApiServices(builder.Configuration);
+
+builder.Services.ConfigureDalServices();
+builder.Services.ConfigureBllServices();
+builder.Services.ConfigureDB(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(MappingRequestProfile), typeof(MappingResponseProfile));
 
 
 var app = builder.Build();

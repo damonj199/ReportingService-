@@ -7,6 +7,6 @@ public static class ConfigureServices
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-        services.ConfigureDataBase(configurationManager);
+        services.ConfigureDB(configurationManager);
     }
 }
