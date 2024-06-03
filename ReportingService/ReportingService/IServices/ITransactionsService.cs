@@ -4,5 +4,5 @@ namespace ReportingService.Bll.IServices;
 
 public interface ITransactionsService
 {
-    public List<TransactionResponse> GetInformationAllTransaction();
+    public Task<List<TransactionResponse>> GetInformationAllTransactionAsync();
 }

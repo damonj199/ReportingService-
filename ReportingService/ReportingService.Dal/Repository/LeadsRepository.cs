@@ -11,14 +11,15 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         
     }
 
-    public LeadDto GetLeadById(Guid Id)
+    public async Task<LeadDto> GetLeadByIdAsync(Guid Id)
     {
-        return _cxt.Leads.FirstOrDefault(a => a.Id == Id);
-        //return new AccountDto();
+        var leadId = await _cxt.Leads.FirstOrDefaultAsync(a => a.Id == Id);
+        return leadId;
     }
 
-    public List<LeadDto> GetLeads()
+    public async Task<List<LeadDto>> GetLeadsAsync()
     {
-        return _cxt.Leads.ToList();
+        var leads = await _cxt.Leads.ToListAsync();
+        return leads;
     }
 }

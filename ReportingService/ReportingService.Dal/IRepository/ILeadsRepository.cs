@@ -4,6 +4,6 @@ namespace ReportingService.Dal.IRepository;
 
 public interface ILeadsRepository
 {
-    LeadDto GetLeadById(Guid id);
-    List<LeadDto> GetLeads();
+    Task<LeadDto> GetLeadByIdAsync(Guid id);
+    Task<List<LeadDto>> GetLeadsAsync();
 }

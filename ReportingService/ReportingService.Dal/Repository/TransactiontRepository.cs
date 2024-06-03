@@ -1,4 +1,5 @@
-﻿using ReportingService.Core.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
 
@@ -13,10 +14,12 @@ namespace ReportingService.Dal.Repository
 
         }
 
-        public List<TransactionDto> GetInformationAllTransaction()
+        public async Task<List<TransactionDto>> GetInformationAllTransactionAsync()
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
-            return _cxt.Transactions.ToList();
+            var transactions = await _cxt.Transactions.ToListAsync();
+
+            return transactions;
         }
     }
 }

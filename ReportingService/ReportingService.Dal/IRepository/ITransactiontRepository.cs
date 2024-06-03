@@ -4,6 +4,6 @@ namespace ReportingService.Dal.IRepository
 {
     public interface ITransactiontRepository
     {
-        public List<TransactionDto> GetInformationAllTransaction();
+        public Task<List<TransactionDto>> GetInformationAllTransactionAsync();
     }
 }

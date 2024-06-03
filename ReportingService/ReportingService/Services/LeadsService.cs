@@ -19,15 +19,19 @@ public class LeadsService : ILeadsService
 
     //List<Guid> AccountsId = new List<Guid>();
 
-    public LeadResponse GetLeadById(Guid Id)
+    public async Task<LeadResponse> GetLeadByIdAsync(Guid Id)
     {
         _logger.Information("проверяем работает ли сервис слой");
-        return _mapper.Map<LeadResponse>(_accountRepository.GetLeadById(Id));
+        var leadId = await _accountRepository.GetLeadByIdAsync(Id);
+
+        return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public List<LeadResponse> GetLeads()
+    public async Task<List<LeadResponse>> GetLeadsAsync()
     {
         _logger.Information("Что пока не работает!");
-        return _mapper.Map<List<LeadResponse>>(_accountRepository.GetLeads());
+        var leads = await _accountRepository.GetLeadsAsync();
+
+        return _mapper.Map<List<LeadResponse>>(leads);
     }
 }

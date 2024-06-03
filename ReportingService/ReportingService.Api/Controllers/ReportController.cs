@@ -15,22 +15,25 @@ namespace ReportingService.Api.Controllers
 
         public ReportController(ILogger<ReportController> logger, ILeadsService accountsService)
         {
-            //_reportsService = reportsService;
             _accountService = accountsService;
-
         }
 
         [HttpGet("/lead")]
-        public ActionResult<LeadResponse> GetLeadById(Guid Id)
+        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid Id)
         {
             _logger.Information("проверяем работат или нет");
-            return Ok(_accountService.GetLeadById(Id));
+            var leadId = await _accountService.GetLeadByIdAsync(Id);
+
+            return Ok(leadId);
         }
 
         [HttpGet("/leads")]
-        public ActionResult<List<LeadResponse>> GetLeads()
+        public async Task<ActionResult<List<LeadResponse>>> GetLeadsAsync()
         {
-            return Ok(_accountService.GetLeads());
+            _logger.Information("почему то все еще не пишет логи в консоль!!!");
+            var leads = await _accountService.GetLeadsAsync();
+
+            return Ok(leads);
         }
     }
 }

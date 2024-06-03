@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
-using ReportingService.Core.Dtos;
 using Serilog;
 
 namespace ReportingService.Api.Controllers
@@ -20,10 +19,12 @@ namespace ReportingService.Api.Controllers
 
 
         [HttpGet()]
-        public ActionResult<List<TransactionResponse>> GetInformationAllTransaction()
+        public async Task<ActionResult<List<TransactionResponse>>> GetInformationAllTransactionAsync()
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationAllTransaction");
-            return Ok(_transactionsService.GetInformationAllTransaction());
+            var transactions = await _transactionsService.GetInformationAllTransactionAsync();
+
+            return Ok(transactions);
         }
     }
 }
