@@ -28,16 +28,16 @@ namespace ReportingService.Api.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("{leadId}")] 
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsynk(Guid accountId)
+        [HttpGet("by-lead/{leadId}")]
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsynk(Guid leadId)
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-            var transactions = await _transactionsService.GetTransactionsByLeadIdAsynk(accountId);
+            var transactions = await _transactionsService.GetTransactionsByLeadIdAsynk(leadId);
 
             return Ok(transactions);
         }
 
-        [HttpGet("{accountId}")]
+        [HttpGet("by-account/{accountId}")]
         public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynk(Guid accountId)
         {
             _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
