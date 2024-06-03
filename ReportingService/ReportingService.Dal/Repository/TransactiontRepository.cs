@@ -14,12 +14,24 @@ namespace ReportingService.Dal.Repository
 
         }
 
-        public async Task<List<TransactionDto>> GetInformationAllTransactionAsync()
+        public async Task<List<TransactionDto>> GetAllTransactionAsync()
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
             var transactions = await _cxt.Transactions.ToListAsync();
 
             return transactions;
+        }
+
+        public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsynk(Guid id)
+        {
+            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
+            return await _cxt.Transactions.Where(t => t.Account.Id == id).ToListAsync();
+        }
+
+        public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsynk(Guid id)
+        {
+            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
+            return await _cxt.Transactions.Where(t => t.Id == id).ToListAsync();
         }
     }
 }

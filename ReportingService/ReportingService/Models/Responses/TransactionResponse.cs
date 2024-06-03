@@ -5,8 +5,7 @@ namespace ReportingService.Bll.Models.Responses
 {
     public class TransactionResponse
     {
-        public Guid Id { get; set; }
-        //public AccountDto AccountId { get; set; }
+       public AccountDto AccountId { get; set; }
         public TransactionType TransactionType { get; set; }
         public CurrencyType CurrencyType { get; set; }
         public double Commission { get; set; }
@@ -14,3 +13,4 @@ namespace ReportingService.Bll.Models.Responses
         public DateTime Date { get; set; }
     }
 }
+
