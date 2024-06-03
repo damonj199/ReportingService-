@@ -12,6 +12,7 @@ namespace ReportingService.Api.Controllers
         private readonly ITransactionsService _transactionsService;
         private readonly Serilog.ILogger _logger = Log.ForContext<TransactionController>();
 
+
         public TransactionController(ILogger<TransactionController> logger, ITransactionsService transactionsService)
         {
             _transactionsService = transactionsService;

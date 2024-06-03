@@ -3,9 +3,15 @@ using ReportingService.Bll;
 using ReportingService.Core.Models.Requestes;
 using ReportingService.Core.Models.Responses;
 using ReportingService.Dal;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
 
+
+Log.Logger = new LoggerConfiguration() //такой singleton на все приложение 
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger(); //
 
 builder.Services.ConfigureApiServices(builder.Configuration);
 
