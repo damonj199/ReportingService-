@@ -5,5 +5,5 @@ namespace ReportingService.Dal.IRepository;
 public interface ILeadsRepository
 {
     Task<LeadDto> GetLeadByIdAsync(Guid id);
-    Task<List<LeadDto>> GetLeadsAsync();
+    Task<List<LeadDto>> GetLeadsAsync(int count);
 }

@@ -29,17 +29,17 @@ public class TransactionsService : ITransactionsService
 
     }
 
-    public async Task<List<TransactionResponse>> GetTransactionsByLeadIdAsynk(Guid id)
+    public async Task<List<TransactionResponse>> GetTransactionsByLeadIdAsync(Guid id)
     {
         _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsynk(id);
+        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsync(id);
         return _mapper.Map<List<TransactionResponse>>(transactions);
     }
 
-    public async Task<List<TransactionWithAccountIdResponse>> GetTransactionsByAccountIdAsynk(Guid id)
+    public async Task<List<TransactionWithAccountIdResponse>> GetTransactionsByAccountIdAsync(Guid id)
     {
         _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
-        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByAccountIdAsynk(id);
+        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByAccountIdAsync(id);
         return _mapper.Map<List<TransactionWithAccountIdResponse>>(transactions);
     }
 }

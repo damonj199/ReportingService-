@@ -1,3 +1,4 @@
+using MassTransit;
 using ReportingService.Api.Configure;
 using ReportingService.Bll;
 using ReportingService.Core.Models.Requestes;
@@ -8,6 +9,10 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq();
+});
 
 Log.Logger = new LoggerConfiguration() //такой singleton на все приложение 
     .ReadFrom.Configuration(builder.Configuration)

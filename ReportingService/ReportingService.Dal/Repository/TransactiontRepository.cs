@@ -22,16 +22,16 @@ namespace ReportingService.Dal.Repository
             return transactions;
         }
 
-        public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsynk(Guid id)
+        public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
-            return await _cxt.Transactions.Where(t => t.Account.Id == id).ToListAsync();
+            return await _cxt.Transactions.Where(t => t.Account.Id == id).AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsynk(Guid id)
+        public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsync(Guid id)
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
-            return await _cxt.Transactions.Where(t => t.Id == id).ToListAsync();
+            return await _cxt.Transactions.Where(t => t.Id == id).AsNoTracking().ToListAsync();
         }
     }
 }

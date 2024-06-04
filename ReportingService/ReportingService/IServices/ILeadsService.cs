@@ -6,5 +6,5 @@ namespace ReportingService.Bll.IServices;
 public interface ILeadsService
 {
     Task<LeadResponse> GetLeadByIdAsync(Guid Id);
-    Task<List<LeadResponse>> GetLeadsAsync();
+    Task<List<LeadResponse>> GetLeadsAsync(int count);
 }

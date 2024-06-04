@@ -27,10 +27,12 @@ public class LeadsService : ILeadsService
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadResponse>> GetLeadsAsync()
+    public async Task<List<LeadResponse>> GetLeadsAsync(int count)
     {
-        _logger.Information("Что пока не работает!");
-        var leads = await _accountRepository.GetLeadsAsync();
+        //DateTime startDate = DateTime.Now.AddDays(-count);
+
+        var leads = await _accountRepository.GetLeadsAsync(count);
+        _logger.Information("высчитываем нужный период для отчета");
 
         return _mapper.Map<List<LeadResponse>>(leads);
     }

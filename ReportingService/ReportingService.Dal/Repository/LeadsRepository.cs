@@ -13,13 +13,23 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
 
     public async Task<LeadDto> GetLeadByIdAsync(Guid Id)
     {
-        var leadId = await _cxt.Leads.FirstOrDefaultAsync(a => a.Id == Id);
+        var leadId = await _cxt.Leads
+            .AsNoTracking()
+            .Include(a => a.Accounts)
+            .ThenInclude(at => at.Transactions)
+            .FirstOrDefaultAsync(a => a.Id == Id);
+        
         return leadId;
     }
 
-    public async Task<List<LeadDto>> GetLeadsAsync()
+    public async Task<List<LeadDto>> GetLeadsAsync(int count)
     {
-        var leads = await _cxt.Leads.ToListAsync();
+        DateTime startDate = DateTime.UtcNow.AddDays(-count);
+        var leads = await _cxt.Leads
+            .AsNoTracking()
+            .Include (a => a.Accounts)
+            .ThenInclude(at => at.Transactions.Where(t => t.Date >= startDate))
+            .ToListAsync();
         return leads;
     }
 }
