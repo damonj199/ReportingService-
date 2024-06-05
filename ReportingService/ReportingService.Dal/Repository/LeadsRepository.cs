@@ -22,7 +22,7 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         return leadId;
     }
 
-    public async Task<List<LeadDto>> GetLeadsAsync(int count)
+    public async Task<List<LeadDto>> GetAllInfoLeadsAsync(int count)
     {
         DateTime startDate = DateTime.UtcNow.AddDays(-count);
         var leads = await _cxt.Leads

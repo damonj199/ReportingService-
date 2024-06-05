@@ -20,10 +20,10 @@ namespace ReportingService.Api.Controllers
 
 
         [HttpGet()]
-        public async Task<ActionResult<List<TransactionResponse>>> GetAllTransactionAsync()
+        public async Task<ActionResult<List<TransactionResponse>>> GetAllTransactionsAsync()
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationAllTransaction");
-            var transactions = await _transactionsService.GetAllTransactionAsync();
+            var transactions = await _transactionsService.GetAllTransactionsAsync();
 
             return Ok(transactions);
         }
@@ -38,7 +38,7 @@ namespace ReportingService.Api.Controllers
         }
 
         [HttpGet("by-account/{accountId}")]
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynk(Guid accountId)
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynс(Guid accountId)
         {
             _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
             var transactions = await _transactionsService.GetTransactionsByAccountIdAsync(accountId);

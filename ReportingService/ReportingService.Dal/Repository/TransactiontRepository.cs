@@ -14,7 +14,7 @@ namespace ReportingService.Dal.Repository
 
         }
 
-        public async Task<List<TransactionDto>> GetAllTransactionAsync()
+        public async Task<List<TransactionDto>> GetAllTransactionsAsync()
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
             var transactions = await _cxt.Transactions.ToListAsync();

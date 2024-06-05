@@ -8,31 +8,27 @@ namespace ReportingService.Bll.Services;
 
 public class LeadsService : ILeadsService
 {
-    private readonly ILeadsRepository _accountRepository;
+    private readonly ILeadsRepository _leadRepository;
     private readonly ILogger _logger = Log.ForContext<ReportsService>();
     private readonly IMapper _mapper;
-    public LeadsService(ILeadsRepository accountRepository, IMapper mapper)
+    public LeadsService(ILeadsRepository leadRepository, IMapper mapper)
     {
-        _accountRepository = accountRepository;
+        _leadRepository = leadRepository;
         _mapper = mapper;
     }
 
-    //List<Guid> AccountsId = new List<Guid>();
-
-    public async Task<LeadResponse> GetLeadByIdAsync(Guid Id)
+    public async Task<LeadResponse> GetLeadByIdAsync(Guid id)
     {
-        _logger.Information("проверяем работает ли сервис слой");
-        var leadId = await _accountRepository.GetLeadByIdAsync(Id);
+        _logger.Information("вызываем репозитория для поиска лида по id");
+        var leadId = await _leadRepository.GetLeadByIdAsync(id);
 
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadResponse>> GetLeadsAsync(int count)
+    public async Task<List<LeadResponse>> GetAllInfoLeadsAsync(int countDays)
     {
-        //DateTime startDate = DateTime.Now.AddDays(-count);
-
-        var leads = await _accountRepository.GetLeadsAsync(count);
-        _logger.Information("высчитываем нужный период для отчета");
+        _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
+        var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
 
         return _mapper.Map<List<LeadResponse>>(leads);
     }

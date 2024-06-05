@@ -11,29 +11,29 @@ namespace ReportingService.Api.Controllers
     public class ReportController : Controller
     {
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ILeadsService _accountService;
+        private readonly ILeadsService _leadService;
         private readonly Serilog.ILogger _logger = Log.ForContext<ReportController>();
 
-        public ReportController(ILogger<ReportController> logger, ILeadsService accountsService, IPublishEndpoint publishEndpoint)
+        public ReportController(ILogger<ReportController> logger, ILeadsService leadService, IPublishEndpoint publishEndpoint)
         {
-            _accountService = accountsService;
+            _leadService = leadService;
             _publishEndpoint = publishEndpoint;
         }
 
-        [HttpGet("/lead")]
-        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid Id)
+        [HttpGet("/lead/{id}")]
+        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid id)
         {
-            _logger.Information("проверяем работат или нет");
-            var leadId = await _accountService.GetLeadByIdAsync(Id);
+            _logger.Information("передаем id в сервис для поиска лида");
+            var leadId = await _leadService.GetLeadByIdAsync(id);
 
             return Ok(leadId);
         }
 
-        [HttpGet("/leads/by-day/{count}")]
-        public async Task<ActionResult<List<LeadResponse>>> GetLeadsAsync(int count)
+        [HttpGet("/leads/by-day/{count-days}")]
+        public async Task<ActionResult<List<LeadResponse>>> GetAllInfoLeadsAsync(int countDays)
         {
-            _logger.Information("почему то все еще не пишет логи в консоль!!!");
-            var leads = await _accountService.GetLeadsAsync(count);
+            _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
+            var leads = await _leadService.GetAllInfoLeadsAsync(countDays);
 
             return Ok(leads);
         }
