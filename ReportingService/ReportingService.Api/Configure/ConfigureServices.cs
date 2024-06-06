@@ -8,5 +8,9 @@ public static class ConfigureServices
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.ConfigureDB(configurationManager);
+        services.AddControllersWithViews()
+        .AddNewtonsoftJson(
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
     }
 }

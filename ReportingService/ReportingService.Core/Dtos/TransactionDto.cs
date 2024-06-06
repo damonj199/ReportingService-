@@ -1,5 +1,4 @@
 ﻿using ReportingService.Core.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace ReportingService.Core.Dtos;
 

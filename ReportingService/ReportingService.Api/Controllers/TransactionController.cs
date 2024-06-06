@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
-using ReportingService.Core.Dtos;
 using Serilog;
 
 namespace ReportingService.Api.Controllers
@@ -13,6 +12,7 @@ namespace ReportingService.Api.Controllers
         private readonly ITransactionsService _transactionsService;
         private readonly Serilog.ILogger _logger = Log.ForContext<TransactionController>();
 
+
         public TransactionController(ILogger<TransactionController> logger, ITransactionsService transactionsService)
         {
             _transactionsService = transactionsService;
@@ -20,10 +20,30 @@ namespace ReportingService.Api.Controllers
 
 
         [HttpGet()]
-        public ActionResult<List<TransactionResponse>> GetInformationAllTransaction()
+        public async Task<ActionResult<List<TransactionResponse>>> GetAllTransactionsAsync()
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationAllTransaction");
-            return Ok(_transactionsService.GetInformationAllTransaction());
+            var transactions = await _transactionsService.GetAllTransactionsAsync();
+
+            return Ok(transactions);
+        }
+
+        [HttpGet("by-lead/{leadId}")]
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
+        {
+            _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
+            var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
+
+            return Ok(transactions);
+        }
+
+        [HttpGet("by-account/{accountId}")]
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynс(Guid accountId)
+        {
+            _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
+            var transactions = await _transactionsService.GetTransactionsByAccountIdAsync(accountId);
+
+            return Ok(transactions);
         }
     }
 }

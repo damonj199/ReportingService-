@@ -9,28 +9,30 @@ namespace ReportingService.Api.Controllers
     [Route("/api/reports")]
     public class ReportController : Controller
     {
-        //private readonly IReportsService _reportsService;
-        private readonly ILeadsService _accountService;
+        private readonly ILeadsService _leadService;
         private readonly Serilog.ILogger _logger = Log.ForContext<ReportController>();
 
-        public ReportController(ILogger<ReportController> logger, ILeadsService accountsService)
+        public ReportController(ILogger<ReportController> logger, ILeadsService leadService)
         {
-            //_reportsService = reportsService;
-            _accountService = accountsService;
-
+            _leadService = leadService;
         }
 
-        [HttpGet("/lead")]
-        public ActionResult<LeadResponse> GetLeadById(Guid Id)
+        [HttpGet("/lead/{id}")]
+        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid id)
         {
-            _logger.Information("проверяем работат или нет");
-            return Ok(_accountService.GetLeadById(Id));
+            _logger.Information("передаем id в сервис для поиска лида");
+            var leadId = await _leadService.GetLeadByIdAsync(id);
+
+            return Ok(leadId);
         }
 
-        [HttpGet("/leads")]
-        public ActionResult<List<LeadResponse>> GetLeads()
+        [HttpGet("/leads-with-transactions")]
+        public async Task<ActionResult<List<LeadResponse>>> GetAllInfoLeadsAsync(int countDays)
         {
-            return Ok(_accountService.GetLeads());
+            _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
+            var leads = await _leadService.GetAllInfoLeadsAsync(countDays);
+
+            return Ok(leads);
         }
     }
 }

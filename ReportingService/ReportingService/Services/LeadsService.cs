@@ -8,26 +8,36 @@ namespace ReportingService.Bll.Services;
 
 public class LeadsService : ILeadsService
 {
-    private readonly ILeadsRepository _accountRepository;
+    private readonly ILeadsRepository _leadRepository;
     private readonly ILogger _logger = Log.ForContext<ReportsService>();
     private readonly IMapper _mapper;
-    public LeadsService(ILeadsRepository accountRepository, IMapper mapper)
+    public LeadsService(ILeadsRepository leadRepository, IMapper mapper)
     {
-        _accountRepository = accountRepository;
+        _leadRepository = leadRepository;
         _mapper = mapper;
     }
 
-    //List<Guid> AccountsId = new List<Guid>();
-
-    public LeadResponse GetLeadById(Guid Id)
+    public async Task<LeadResponse> GetLeadByIdAsync(Guid id)
     {
-        _logger.Information("проверяем работает ли сервис слой");
-        return _mapper.Map<LeadResponse>(_accountRepository.GetLeadById(Id));
+        _logger.Information("вызываем репозитория для поиска лида по id");
+        var leadId = await _leadRepository.GetLeadByIdAsync(id);
+
+        return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public List<LeadResponse> GetLeads()
+    public async Task<List<LeadResponse>> GetAllInfoLeadsAsync(int countDays)
     {
-        _logger.Information("Что пока не работает!");
-        return _mapper.Map<List<LeadResponse>>(_accountRepository.GetLeads());
+        if (countDays <= 0)
+        {
+            _logger.Information("не допустимое значение дней для отчета!");
+            return null;
+        }
+        else
+        {
+            _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
+            var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
+
+            return _mapper.Map<List<LeadResponse>>(leads);
+        }
     }
 }

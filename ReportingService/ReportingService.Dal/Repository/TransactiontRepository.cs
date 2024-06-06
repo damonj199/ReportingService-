@@ -1,4 +1,5 @@
-﻿using ReportingService.Core.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
 
@@ -13,10 +14,24 @@ namespace ReportingService.Dal.Repository
 
         }
 
-        public List<TransactionDto> GetInformationAllTransaction()
+        public async Task<List<TransactionDto>> GetAllTransactionsAsync()
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
-            return _cxt.Transactions.ToList();
+            var transactions = await _cxt.Transactions.ToListAsync();
+
+            return transactions;
+        }
+
+        public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
+        {
+            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
+            return await _cxt.Transactions.Where(t => t.Account.Id == id).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsync(Guid id)
+        {
+            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
+            return await _cxt.Transactions.Where(t => t.Id == id).AsNoTracking().ToListAsync();
         }
     }
 }

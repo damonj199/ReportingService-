@@ -11,14 +11,26 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         
     }
 
-    public LeadDto GetLeadById(Guid Id)
+    public async Task<LeadDto> GetLeadByIdAsync(Guid id)
     {
-        return _cxt.Leads.FirstOrDefault(a => a.Id == Id);
-        //return new AccountDto();
+        var leadId = await _cxt.Leads
+            .AsNoTracking()
+            .Include(a => a.Accounts)
+            .ThenInclude(at => at.Transactions)
+            .FirstOrDefaultAsync(a => a.Id == id);
+        
+        return leadId;
     }
 
-    public List<LeadDto> GetLeads()
+    public async Task<List<LeadDto>> GetAllInfoLeadsAsync(int countDays)
     {
-        return _cxt.Leads.ToList();
+        DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
+
+        var leads = await _cxt.Leads
+            .AsNoTracking()
+            .Include (a => a.Accounts)
+            .ThenInclude(at => at.Transactions.Where(t => t.Date >= startDate))
+            .ToListAsync();
+        return leads;
     }
 }
