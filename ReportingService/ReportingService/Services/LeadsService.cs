@@ -27,9 +27,17 @@ public class LeadsService : ILeadsService
 
     public async Task<List<LeadResponse>> GetAllInfoLeadsAsync(int countDays)
     {
-        _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
-        var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
+        if (countDays <= 0)
+        {
+            _logger.Information("не допустимое значение дней для отчета!");
+            return null;
+        }
+        else
+        {
+            _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
+            var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
 
-        return _mapper.Map<List<LeadResponse>>(leads);
+            return _mapper.Map<List<LeadResponse>>(leads);
+        }
     }
 }

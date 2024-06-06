@@ -1,4 +1,3 @@
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
@@ -10,14 +9,12 @@ namespace ReportingService.Api.Controllers
     [Route("/api/reports")]
     public class ReportController : Controller
     {
-        private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILeadsService _leadService;
         private readonly Serilog.ILogger _logger = Log.ForContext<ReportController>();
 
-        public ReportController(ILogger<ReportController> logger, ILeadsService leadService, IPublishEndpoint publishEndpoint)
+        public ReportController(ILogger<ReportController> logger, ILeadsService leadService)
         {
             _leadService = leadService;
-            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet("/lead/{id}")]
@@ -29,7 +26,7 @@ namespace ReportingService.Api.Controllers
             return Ok(leadId);
         }
 
-        [HttpGet("/leads/by-day/{count-days}")]
+        [HttpGet("/leads-with-transactions")]
         public async Task<ActionResult<List<LeadResponse>>> GetAllInfoLeadsAsync(int countDays)
         {
             _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
