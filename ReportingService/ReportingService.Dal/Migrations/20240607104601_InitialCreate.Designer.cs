@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ReportingService.Core.Enums;
 using ReportingService.Dal;
 
 #nullable disable
@@ -12,7 +13,7 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240530135622_InitialCreate")]
+    [Migration("20240607104601_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +21,7 @@ namespace ReportingService.Dal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "account_status", new[] { "unknown", "active", "blocked" });
@@ -36,16 +37,16 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("Currency")
-                        .HasColumnType("integer")
+                    b.Property<CurrencyType>("Currency")
+                        .HasColumnType("currency_type")
                         .HasColumnName("currency");
 
                     b.Property<Guid>("LeadsId")
                         .HasColumnType("uuid")
                         .HasColumnName("leads_id");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<AccountStatus>("Status")
+                        .HasColumnType("account_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -92,8 +93,8 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("character varying(12)")
                         .HasColumnName("phone");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<LeadStatus>("Status")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -117,8 +118,8 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("lead_id");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<LeadStatus>("Status")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -150,16 +151,18 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("commission");
 
-                    b.Property<int>("CurrencyType")
-                        .HasColumnType("integer")
+                    b.Property<CurrencyType>("CurrencyType")
+                        .HasColumnType("currency_type")
                         .HasColumnName("currency_type");
 
                     b.Property<DateTime>("Date")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date");
+                        .HasColumnName("date")
+                        .HasDefaultValueSql("NOW()");
 
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("integer")
+                    b.Property<TransactionType>("TransactionType")
+                        .HasColumnType("transaction_type")
                         .HasColumnName("transaction_type");
 
                     b.HasKey("Id")

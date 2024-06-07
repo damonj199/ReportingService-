@@ -35,12 +35,6 @@ public class ReportingServiceContext : DbContext
 
         builder.Property(t => t.Date)
                .HasDefaultValueSql("NOW()");
-
-        builder.Property(t => t.TransactionType)
-            .HasColumnType("TransactionType");
-
-        builder.Property(t => t.CurrencyType)
-            .HasColumnType("CurrencyType");
     }
 
     private void ConfigureLeadDto(EntityTypeBuilder<LeadDto> builder)
@@ -71,28 +65,16 @@ public class ReportingServiceContext : DbContext
             .HasMaxLength(12)
             .HasColumnType("character varying(12)")
             .HasColumnName("phone");
-
-        builder.Property(a => a.Status)
-            .HasColumnType("LeadStatus");
     }
 
     private void ConfigureAccountDto(EntityTypeBuilder<AccountDto> builder)
     {
         builder.HasMany(a => a.Transactions)
             .WithOne(t => t.Account);
-
-        builder.Property(a => a.Currency)
-            .HasColumnType("CurrencyType");
-
-        builder.Property(a => a.Status)
-            .HasColumnType("AccountStatus");
     }
     private void ConfigureStatusHistoryDto(EntityTypeBuilder<StatusHistoryDto> builder)
     {
         builder.HasOne(s => s.Lead)
              .WithMany(l => l.StatusHistory);
-
-        builder.Property(s => s.Status)
-            .HasColumnType("LeadStatus");
     }
 }

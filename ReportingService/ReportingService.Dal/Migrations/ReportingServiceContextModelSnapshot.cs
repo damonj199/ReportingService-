@@ -35,7 +35,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("id");
 
                     b.Property<CurrencyType>("Currency")
-                        .HasColumnType("CurrencyType")
+                        .HasColumnType("currency_type")
                         .HasColumnName("currency");
 
                     b.Property<Guid>("LeadsId")
@@ -43,7 +43,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("leads_id");
 
                     b.Property<AccountStatus>("Status")
-                        .HasColumnType("AccountStatus")
+                        .HasColumnType("account_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -91,7 +91,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("phone");
 
                     b.Property<LeadStatus>("Status")
-                        .HasColumnType("LeadStatus")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -116,7 +116,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("lead_id");
 
                     b.Property<LeadStatus>("Status")
-                        .HasColumnType("LeadStatus")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -149,7 +149,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("commission");
 
                     b.Property<CurrencyType>("CurrencyType")
-                        .HasColumnType("CurrencyType")
+                        .HasColumnType("currency_type")
                         .HasColumnName("currency_type");
 
                     b.Property<DateTime>("Date")
@@ -159,7 +159,7 @@ namespace ReportingService.Dal.Migrations
                         .HasDefaultValueSql("NOW()");
 
                     b.Property<TransactionType>("TransactionType")
-                        .HasColumnType("TransactionType")
+                        .HasColumnType("transaction_type")
                         .HasColumnName("transaction_type");
 
                     b.HasKey("Id")

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using ReportingService.Core.Enums;
 
 #nullable disable
 
@@ -27,7 +28,7 @@ namespace ReportingService.Dal.Migrations
                     phone = table.Column<string>(type: "character varying(12)", maxLength: 12, nullable: false),
                     address = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     birth_date = table.Column<DateOnly>(type: "date", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false)
+                    status = table.Column<LeadStatus>(type: "lead_status", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,8 +40,8 @@ namespace ReportingService.Dal.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    currency = table.Column<int>(type: "integer", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
+                    currency = table.Column<CurrencyType>(type: "currency_type", nullable: false),
+                    status = table.Column<AccountStatus>(type: "account_status", nullable: false),
                     leads_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -60,7 +61,7 @@ namespace ReportingService.Dal.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     lead_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<LeadStatus>(type: "lead_status", nullable: false),
                     created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -80,11 +81,11 @@ namespace ReportingService.Dal.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     account_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    transaction_type = table.Column<int>(type: "integer", nullable: false),
-                    currency_type = table.Column<int>(type: "integer", nullable: false),
+                    transaction_type = table.Column<TransactionType>(type: "transaction_type", nullable: false),
+                    currency_type = table.Column<CurrencyType>(type: "currency_type", nullable: false),
                     commission = table.Column<double>(type: "double precision", nullable: false),
                     amount = table.Column<decimal>(type: "numeric(11,4)", precision: 11, scale: 4, nullable: false),
-                    date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {
