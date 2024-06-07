@@ -23,7 +23,7 @@ public class TransactionsService : ITransactionsService
     public async Task<List<TransactionResponse>> GetAllTransactionsAsync()
     {
         _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
-        var transactions = await _transactionRepository.GetAllTransactionsAsync();
+        List<TransactionDto> transactions = await _transactionRepository.GetAllTransactionsAsync();
 
         return _mapper.Map<List<TransactionResponse>>(transactions);
 
@@ -41,5 +41,13 @@ public class TransactionsService : ITransactionsService
         _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
         List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByAccountIdAsync(id);
         return _mapper.Map<List<TransactionWithAccountIdResponse>>(transactions);
+    }
+
+    public async Task<List<NegativBalanceResponse>> GetAccountsNegativBalanceAsync()
+    {
+        _logger.Information("обращаемся к репозиторию, с методом получения акк");
+        List<AccountNegativBalanceDto> negBalance = await _transactionRepository.GetAccountsWithNegativeBalanceAsync();
+
+        return _mapper.Map<List<NegativBalanceResponse>>(negBalance);
     }
 }

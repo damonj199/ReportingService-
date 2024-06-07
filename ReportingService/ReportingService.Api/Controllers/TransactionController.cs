@@ -45,5 +45,14 @@ namespace ReportingService.Api.Controllers
 
             return Ok(transactions);
         }
+
+        [HttpGet("accounts-negaiv-balace")]
+        public async Task<ActionResult<List<NegativBalanceResponse>>> GetAccountsNegativBalanceAsync()
+        {
+            _logger.Information("просим очень сильно сервис принять данные и вурнуть Response");
+            var negBalance = await _transactionsService.GetAccountsNegativBalanceAsync();
+
+            return Ok(negBalance);
+        }
     }
 }

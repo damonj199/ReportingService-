@@ -1,10 +1,9 @@
 ﻿using ReportingService.Bll.Models.Responses;
-using ReportingService.Core.Dtos;
 
 namespace ReportingService.Bll.IServices;
 
 public interface ILeadsService
 {
     Task<LeadResponse> GetLeadByIdAsync(Guid Id);
-    Task<List<LeadResponse>> GetAllInfoLeadsAsync(int countDays);
+    Task<List<LeadForStatusUpdateResponse>> GetAllInfoLeadsAsync(int countDays);
 }

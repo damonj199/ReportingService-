@@ -27,7 +27,7 @@ namespace ReportingService.Api.Controllers
         }
 
         [HttpGet("/leads-with-transactions")]
-        public async Task<ActionResult<List<LeadResponse>>> GetAllInfoLeadsAsync(int countDays)
+        public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetAllInfoLeadsAsync(int countDays)
         {
             _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
             var leads = await _leadService.GetAllInfoLeadsAsync(countDays);

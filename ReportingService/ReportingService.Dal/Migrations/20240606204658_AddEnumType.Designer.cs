@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ReportingService.Core.Enums;
 using ReportingService.Dal;
 
 #nullable disable
@@ -12,9 +12,11 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    partial class ReportingServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20240606204658_AddEnumType")]
+    partial class AddEnumType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<CurrencyType>("Currency")
+                    b.Property<int>("Currency")
                         .HasColumnType("CurrencyType")
                         .HasColumnName("currency");
 
@@ -42,7 +44,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("leads_id");
 
-                    b.Property<AccountStatus>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("AccountStatus")
                         .HasColumnName("status");
 
@@ -90,7 +92,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("character varying(12)")
                         .HasColumnName("phone");
 
-                    b.Property<LeadStatus>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("LeadStatus")
                         .HasColumnName("status");
 
@@ -115,7 +117,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("lead_id");
 
-                    b.Property<LeadStatus>("Status")
+                    b.Property<int>("Status")
                         .HasColumnType("LeadStatus")
                         .HasColumnName("status");
 
@@ -148,7 +150,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("commission");
 
-                    b.Property<CurrencyType>("CurrencyType")
+                    b.Property<int>("CurrencyType")
                         .HasColumnType("CurrencyType")
                         .HasColumnName("currency_type");
 
@@ -158,7 +160,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnName("date")
                         .HasDefaultValueSql("NOW()");
 
-                    b.Property<TransactionType>("TransactionType")
+                    b.Property<int>("TransactionType")
                         .HasColumnType("TransactionType")
                         .HasColumnName("transaction_type");
 

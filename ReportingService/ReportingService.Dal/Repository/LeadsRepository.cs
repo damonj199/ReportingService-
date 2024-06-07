@@ -33,4 +33,9 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
             .ToListAsync();
         return leads;
     }
+
+    //public List<Guid> AccounsId()
+    //{
+    //    _cxt.Leads.
+    //}
 }

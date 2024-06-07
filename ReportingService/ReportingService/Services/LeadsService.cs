@@ -25,7 +25,7 @@ public class LeadsService : ILeadsService
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadResponse>> GetAllInfoLeadsAsync(int countDays)
+    public async Task<List<LeadForStatusUpdateResponse>> GetAllInfoLeadsAsync(int countDays)
     {
         if (countDays <= 0)
         {
@@ -37,7 +37,7 @@ public class LeadsService : ILeadsService
             _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
             var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
 
-            return _mapper.Map<List<LeadResponse>>(leads);
+            return _mapper.Map<List<LeadForStatusUpdateResponse>>(leads);
         }
     }
 }

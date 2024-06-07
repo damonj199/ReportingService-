@@ -6,38 +6,50 @@ using ReportingService.Core.Models.Responses;
 using ReportingService.Dal;
 using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Logging.ClearProviders();
-
-builder.Services.AddMassTransit(x =>
+try
 {
-    x.UsingRabbitMq();
-});
+    var builder = WebApplication.CreateBuilder(args);
+    builder.Logging.ClearProviders();
 
-Log.Logger = new LoggerConfiguration() //такой singleton на все приложение 
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger(); //
+    builder.Services.AddMassTransit(x =>
+    {
+        x.UsingRabbitMq();
+    });
 
-builder.Services.ConfigureApiServices(builder.Configuration);
+    Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .CreateLogger(); //
 
-builder.Services.ConfigureDalServices();
-builder.Services.ConfigureBllServices();
-builder.Services.ConfigureDB(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(MappingRequestProfile), typeof(MappingResponseProfile));
+    builder.Services.ConfigureApiServices(builder.Configuration);
+
+    builder.Services.ConfigureDalServices();
+    builder.Services.ConfigureBllServices();
+    builder.Services.ConfigureDB(builder.Configuration);
+    builder.Services.AddAutoMapper(typeof(MappingRequestProfile), typeof(MappingResponseProfile));
 
 
-var app = builder.Build();
+    var app = builder.Build();
+    app.UseMiddleware<ExceptionMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch(Exception ex)
+{
+    Log.Fatal(ex.Message);
+}
+finally
+{
+    Log.CloseAndFlush();
+}

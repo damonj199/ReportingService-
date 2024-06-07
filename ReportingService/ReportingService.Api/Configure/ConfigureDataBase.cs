@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using ReportingService.Core.Enums;
 using ReportingService.Dal;
 
 namespace ReportingService.Api.Configure;
@@ -12,5 +14,11 @@ public static class DataBaseExtansions
                 .UseNpgsql(configurationManager
                 .GetConnectionString("ReportingService"))
                 .UseSnakeCaseNamingConvention());
+
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<CurrencyType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<TransactionType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<AccountStatus>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<LeadStatus>();
+
     }
 }

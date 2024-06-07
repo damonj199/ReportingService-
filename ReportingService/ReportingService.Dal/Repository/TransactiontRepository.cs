@@ -25,13 +25,34 @@ namespace ReportingService.Dal.Repository
         public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
-            return await _cxt.Transactions.Where(t => t.Account.Id == id).AsNoTracking().ToListAsync();
+            return await _cxt.Transactions
+                .Where(t => t.Account.Id == id)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsync(Guid id)
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
-            return await _cxt.Transactions.Where(t => t.Id == id).AsNoTracking().ToListAsync();
+            return await _cxt.Transactions
+                .Where(t => t.Id == id)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<List<AccountNegativBalanceDto>> GetAccountsWithNegativeBalanceAsync()
+        {
+            _logger.Information("Идем в базу искать акк с отрицательным балансом");
+            return await _cxt.Transactions
+                .AsNoTracking()
+                .GroupBy(a => a.Account.Id)
+                .Select(j => new AccountNegativBalanceDto
+                {
+                    AccountId = j.Key,
+                    Sum = j.Sum(t => t.Amount)
+                })
+                .Where(t => t.Sum < 0)
+                .ToListAsync();
         }
     }
 }
