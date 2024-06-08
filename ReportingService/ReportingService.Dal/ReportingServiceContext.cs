@@ -33,8 +33,8 @@ public class ReportingServiceContext : DbContext
         builder.Property(t => t.Amount)
             .HasPrecision(11, 4);
 
-        builder.Property(t => t.Date)
-               .HasDefaultValueSql("NOW()");
+        builder.Property(t => t.Commission)
+            .IsRequired(false);
     }
 
     private void ConfigureLeadDto(EntityTypeBuilder<LeadDto> builder)

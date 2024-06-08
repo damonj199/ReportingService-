@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReportingService.Core.Enums;
@@ -12,9 +13,11 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    partial class ReportingServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20240608012520_UdateDb")]
+    partial class UdateDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,7 +147,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
 
-                    b.Property<double?>("Commission")
+                    b.Property<double>("Commission")
                         .HasColumnType("double precision")
                         .HasColumnName("commission");
 
