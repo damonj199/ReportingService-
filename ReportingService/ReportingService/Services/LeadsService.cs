@@ -17,15 +17,15 @@ public class LeadsService : ILeadsService
         _mapper = mapper;
     }
 
-    public async Task<LeadResponse> GetLeadByIdAsync(Guid id)
+    public async Task<LeadResponse> GetLeadFullInfoByIdAsync(Guid id)
     {
         _logger.Information("вызываем репозитория для поиска лида по id");
-        var leadId = await _leadRepository.GetLeadByIdAsync(id);
+        var leadId = await _leadRepository.GetLeadFullInfoByIdAsync(id);
 
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadForStatusUpdateResponse>> GetAllInfoLeadsAsync(int countDays)
+    public async Task<List<LeadForStatusUpdateResponse>> LeadWithTransactionsResponseAsync(int countDays)
     {
         if (countDays <= 0)
         {
@@ -35,7 +35,7 @@ public class LeadsService : ILeadsService
         else
         {
             _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
-            var leads = await _leadRepository.GetAllInfoLeadsAsync(countDays);
+            var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
 
             return _mapper.Map<List<LeadForStatusUpdateResponse>>(leads);
         }

@@ -26,8 +26,8 @@ namespace ReportingService.Dal.Repository
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
             return await _cxt.Transactions
-                .Where(t => t.Account.Id == id)
                 .AsNoTracking()
+                .Where(t => t.Account.Id == id)
                 .ToListAsync();
         }
 
@@ -35,8 +35,8 @@ namespace ReportingService.Dal.Repository
         {
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
             return await _cxt.Transactions
-                .Where(t => t.Id == id)
                 .AsNoTracking()
+                .Where(t => t.Id == id)
                 .ToListAsync();
         }
 
@@ -54,5 +54,7 @@ namespace ReportingService.Dal.Repository
                 .Where(t => t.Sum < 0)
                 .ToListAsync();
         }
+
+
     }
 }

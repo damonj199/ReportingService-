@@ -11,7 +11,7 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         
     }
 
-    public async Task<LeadDto> GetLeadByIdAsync(Guid id)
+    public async Task<LeadDto> GetLeadFullInfoByIdAsync(Guid id)
     {
         var leadId = await _cxt.Leads
             .AsNoTracking()
@@ -22,7 +22,7 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         return leadId;
     }
 
-    public async Task<List<LeadDto>> GetAllInfoLeadsAsync(int countDays)
+    public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
     {
         DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 

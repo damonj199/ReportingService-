@@ -17,22 +17,23 @@ namespace ReportingService.Api.Controllers
             _leadService = leadService;
         }
 
-        [HttpGet("/lead/{id}")]
-        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid id)
+        [HttpGet("/lead-fullInfo-byId/{id}")]
+        public async Task<ActionResult<LeadResponse>> GetLeadFullInfoByIdAsync(Guid id)
         {
             _logger.Information("передаем id в сервис для поиска лида");
-            var leadId = await _leadService.GetLeadByIdAsync(id);
+            var leadId = await _leadService.GetLeadFullInfoByIdAsync(id);
 
             return Ok(leadId);
         }
 
         [HttpGet("/leads-with-transactions")]
-        public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetAllInfoLeadsAsync(int countDays)
+        public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> LeadWithTransactionsResponseAsync(int countDays)
         {
             _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
-            var leads = await _leadService.GetAllInfoLeadsAsync(countDays);
+            var leads = await _leadService.LeadWithTransactionsResponseAsync(countDays);
 
             return Ok(leads);
         }
+
     }
 }
