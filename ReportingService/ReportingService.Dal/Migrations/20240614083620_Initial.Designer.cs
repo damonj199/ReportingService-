@@ -13,8 +13,8 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240608012520_UdateDb")]
-    partial class UdateDb
+    [Migration("20240614083620_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,9 +41,9 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("currency_type")
                         .HasColumnName("currency");
 
-                    b.Property<Guid>("LeadsId")
+                    b.Property<Guid>("LeadId")
                         .HasColumnType("uuid")
-                        .HasColumnName("leads_id");
+                        .HasColumnName("lead_id");
 
                     b.Property<AccountStatus>("Status")
                         .HasColumnType("account_status")
@@ -52,8 +52,8 @@ namespace ReportingService.Dal.Migrations
                     b.HasKey("Id")
                         .HasName("pk_accounts");
 
-                    b.HasIndex("LeadsId")
-                        .HasDatabaseName("ix_accounts_leads_id");
+                    b.HasIndex("LeadId")
+                        .HasDatabaseName("ix_accounts_lead_id");
 
                     b.ToTable("accounts", (string)null);
                 });
@@ -147,14 +147,6 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
 
-                    b.Property<double>("Commission")
-                        .HasColumnType("double precision")
-                        .HasColumnName("commission");
-
-                    b.Property<CurrencyType>("CurrencyType")
-                        .HasColumnType("currency_type")
-                        .HasColumnName("currency_type");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
@@ -174,14 +166,14 @@ namespace ReportingService.Dal.Migrations
 
             modelBuilder.Entity("ReportingService.Core.Dtos.AccountDto", b =>
                 {
-                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Leads")
+                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Lead")
                         .WithMany("Accounts")
-                        .HasForeignKey("LeadsId")
+                        .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_accounts_leads_leads_id");
+                        .HasConstraintName("fk_accounts_leads_lead_id");
 
-                    b.Navigation("Leads");
+                    b.Navigation("Lead");
                 });
 
             modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>

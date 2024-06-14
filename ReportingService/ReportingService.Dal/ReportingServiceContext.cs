@@ -33,14 +33,14 @@ public class ReportingServiceContext : DbContext
         builder.Property(t => t.Amount)
             .HasPrecision(11, 4);
 
-        builder.Property(t => t.Commission)
-            .IsRequired(false);
+        //builder.Property(t => t.Commission)
+        //    .IsRequired(false);
     }
 
     private void ConfigureLeadDto(EntityTypeBuilder<LeadDto> builder)
     {
         builder.HasMany(l => l.Accounts)
-            .WithOne(a => a.Leads);
+            .WithOne(a => a.Lead);
 
         builder.Property(a => a.Address)
             .IsRequired()

@@ -9,7 +9,7 @@ namespace ReportingService.Bll.Services;
 public class LeadsService : ILeadsService
 {
     private readonly ILeadsRepository _leadRepository;
-    private readonly ILogger _logger = Log.ForContext<ReportsService>();
+    private readonly ILogger _logger = Log.ForContext<LeadsService>();
     private readonly IMapper _mapper;
     public LeadsService(ILeadsRepository leadRepository, IMapper mapper)
     {
