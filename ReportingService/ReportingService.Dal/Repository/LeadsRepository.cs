@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 
@@ -32,5 +33,12 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
             .ThenInclude(at => at.Transactions.Where(t => t.Date >= startDate))
             .ToListAsync();
         return leads;
+    }
+
+    public async Task<List<LeadDto>> GetLeadsBirthDay()
+    {
+        var leadsBday = await _cxt.Leads
+            .AsNoTracking()
+            .Where(l => l.BirthDate == DateOnly);
     }
 }

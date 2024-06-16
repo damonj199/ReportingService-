@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
 using ReportingService.Dal.IRepository;
-using ReportingService.Dal.Repository;
 using Serilog;
 
 namespace ReportingService.Bll.Services;
 
-public class AccountsService
+public class AccountsService : IAccountsService
 {
     private readonly IAccountsRepository _accountRepository;
     private readonly ILogger _logger = Log.ForContext<AccountsService>();
@@ -33,4 +33,5 @@ public class AccountsService
             return _mapper.Map<List<AccountForStatusUpdateResponse>>(leads);
         }
     }
+
 }

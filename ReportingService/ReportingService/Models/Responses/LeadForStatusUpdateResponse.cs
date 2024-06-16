@@ -8,5 +8,5 @@ public class LeadForStatusUpdateResponse
     public Guid Id { get; set; }
     public LeadStatus Status { get; set; }
     public DateOnly BirthDate { get; set; }
-    public List<AccountDto> Accounts { get; set; }
+    //public List<AccountDto> Accounts { get; set; }
 }
