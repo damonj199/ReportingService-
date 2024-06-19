@@ -55,6 +55,18 @@ namespace ReportingService.Dal.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<TransactionDto>> LeadWithTransactionsResponseAsync(int countDays)
+        {
+            DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
+            var leads = await _cxt.Transactions
+                .AsNoTracking()
+                .Where(t => t.Date >= startDate)
+                .Include(a => a.Account)
+                .ThenInclude(l => l.Lead).Where(l => l.Account.Lead.Status == Core.Enums.LeadStatus.Regular)
+                .ToListAsync();
+
+            return leads;
+        }
     }
 }

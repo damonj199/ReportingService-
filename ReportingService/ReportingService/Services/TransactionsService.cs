@@ -50,4 +50,20 @@ public class TransactionsService : ITransactionsService
 
         return _mapper.Map<List<NegativBalanceResponse>>(negBalance);
     }
+
+    public async Task<List<LeadForStatusUpdateResponse>> LeadWithTransactionsResponseAsync(int countDays)
+    {
+        if (countDays <= 0)
+        {
+            _logger.Information("не допустимое значение дней для отчета!");
+            return null;
+        }
+        else
+        {
+            _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
+            var leads = await _transactionRepository.LeadWithTransactionsResponseAsync(countDays);
+
+            return _mapper.Map<List<LeadForStatusUpdateResponse>>(leads);
+        }
+    }
 }
