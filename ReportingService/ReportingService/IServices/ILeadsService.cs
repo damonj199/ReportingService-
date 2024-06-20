@@ -5,6 +5,5 @@ namespace ReportingService.Bll.IServices;
 public interface ILeadsService
 {
     Task<LeadResponse> GetLeadFullInfoByIdAsync(Guid Id);
-    Task<List<LeadForStatusUpdateResponse>> GetLeadsWithBirthdayTodayAsync();
-    //Task<List<LeadForStatusUpdateResponse>> LeadWithTransactionsResponseAsync(int countDays);
+    Task<List<LeadForStatusUpdateResponse>> GetLeadsWithBirthdayTodayAsync(int countDays);
 }

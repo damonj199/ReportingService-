@@ -26,21 +26,12 @@ public class ReportController : Controller
         return Ok(leadId);
     }
 
-    //[HttpGet("/leads-with-transactions")]
-    //public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> LeadWithTransactionsResponseAsync(int countDays)
-    //{
-    //    _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
-    //    var leads = await _leadService.LeadWithTransactionsResponseAsync(countDays);
-
-    //    return Ok(leads);
-    //}
-
-    [HttpGet("/leads-with-birthday")]
-    public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetLeadsWithBirthdayTodayAsync()
+    [HttpGet("/leads-with-transactions-and-birthday")]
+    public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetLeadsWithBirthdayTodayAsync(int countDays)
     {
         _logger.Information("идем в сервис за данными");
-        var leadsBdate = await _leadService.GetLeadsWithBirthdayTodayAsync();
+        var leads = await _leadService.GetLeadsWithBirthdayTodayAsync(countDays);
 
-        return Ok(leadsBdate);
+        return Ok(leads);
     }
 }

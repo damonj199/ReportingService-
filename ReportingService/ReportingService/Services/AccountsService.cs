@@ -18,7 +18,7 @@ public class AccountsService : IAccountsService
         _mapper = mapper;
     }
 
-    public async Task<List<AccountForStatusUpdateResponse>> LeadsIdFromAccountsAsync(int countDays)
+    public async Task<List<AccountForStatusUpdateResponse>> AccountsWithTransactionsResponseAsync(int countDays)
     {
         if (countDays <= 0)
         {
@@ -28,7 +28,7 @@ public class AccountsService : IAccountsService
         else
         {
             _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
-            var leads = await _accountRepository.LeadsIdFromAccountsAsync(countDays);
+            var leads = await _accountRepository.AccountsWithTransactionsResponseAsync(countDays);
 
             return _mapper.Map<List<AccountForStatusUpdateResponse>>(leads);
         }

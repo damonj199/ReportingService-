@@ -4,5 +4,5 @@ namespace ReportingService.Bll.IServices;
 
 public interface IAccountsService
 {
-    Task<List<AccountForStatusUpdateResponse>> LeadsIdFromAccountsAsync(int countDays);
+    Task<List<AccountForStatusUpdateResponse>> AccountsWithTransactionsResponseAsync(int countDays);
 }

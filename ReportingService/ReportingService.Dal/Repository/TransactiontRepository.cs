@@ -11,15 +11,14 @@ namespace ReportingService.Dal.Repository
 
         public TransactiontRepository(ReportingServiceContext context) : base(context)
         {
-
         }
 
         public async Task<List<TransactionDto>> GetAllTransactionsAsync()
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
-            var transactions = await _cxt.Transactions.ToListAsync();
-
-            return transactions;
+            return await _cxt.Transactions
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
@@ -53,20 +52,6 @@ namespace ReportingService.Dal.Repository
                 })
                 .Where(t => t.Sum < 0)
                 .ToListAsync();
-        }
-
-        public async Task<List<TransactionDto>> LeadWithTransactionsResponseAsync(int countDays)
-        {
-            DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
-
-            var leads = await _cxt.Transactions
-                .AsNoTracking()
-                .Where(t => t.Date >= startDate)
-                .Include(a => a.Account)
-                .ThenInclude(l => l.Lead).Where(l => l.Account.Lead.Status == Core.Enums.LeadStatus.Regular)
-                .ToListAsync();
-
-            return leads;
         }
     }
 }

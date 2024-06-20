@@ -23,28 +23,29 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
         return leadId;
     }
 
-    //public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
+    //public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync()
     //{
-    //    DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
+    //    
 
     //    var leads = await _cxt.Leads
     //        .AsNoTracking()
     //        .Where(l => l.Status != Core.Enums.LeadStatus.Vip)
-    //        .Include (a => a.Accounts)
+    //        .Include 
     //        .ThenInclude(at => at.Transactions.Where(t => t.Date >= startDate))
     //        .ToListAsync();
     //    return leads;
     //}
 
-    public async Task<List<LeadDto>> GetLeadsWithBirthdayTodayAsync()
+    public async Task<List<LeadDto>> GetLeadsWithBirthdayTodayAsync(int countDays)
     {
         DateTime today = DateTime.Today;
+        DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
-        var leadBdate = await _cxt.Leads
+        var leads = await _cxt.Leads
             .AsNoTracking()
             .Where(l => l.BirthDate.Month == today.Month && l.BirthDate.Day == today.Day)
             .ToListAsync();
 
-        return leadBdate;
+        return leads;
     }
 }

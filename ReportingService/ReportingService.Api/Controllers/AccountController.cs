@@ -17,11 +17,11 @@ public class AccountController : Controller
         _accountService = accountsService;
     }
 
-    [HttpGet("")]
-    public async Task<ActionResult<List<AccountForStatusUpdateResponse>>> LeadsIdFromAccountsAsync(int countDays)
+    [HttpGet("/with-transactions")]
+    public async Task<ActionResult<List<AccountForStatusUpdateResponse>>> AccountsWithTransactionsResponseAsync(int countDays)
     {
-        _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
-        var account = await _accountService.LeadsIdFromAccountsAsync(countDays);
+        _logger.Information("получаем период дней для отчета и передаем их в сервис");
+        var account = await _accountService.AccountsWithTransactionsResponseAsync(countDays);
 
         return Ok(account);
     }

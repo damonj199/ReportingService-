@@ -25,26 +25,10 @@ public class LeadsService : ILeadsService
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    //public async Task<List<LeadForStatusUpdateResponse>> LeadWithTransactionsResponseAsync(int countDays)
-    //{
-    //    if (countDays <= 0)
-    //    {
-    //        _logger.Information("не допустимое значение дней для отчета!");
-    //        return null;
-    //    }
-    //    else
-    //    {
-    //        _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
-    //        var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
-
-    //        return _mapper.Map<List<LeadForStatusUpdateResponse>>(leads);
-    //    }
-    //}
-
-    public async Task<List<LeadForStatusUpdateResponse>> GetLeadsWithBirthdayTodayAsync()
+    public async Task<List<LeadForStatusUpdateResponse>> GetLeadsWithBirthdayTodayAsync(int countDays)
     {
         _logger.Information("Идем в репозиторий искать лидов у кого др");
-        var leadsBdate = await _leadRepository.GetLeadsWithBirthdayTodayAsync();
+        var leadsBdate = await _leadRepository.GetLeadsWithBirthdayTodayAsync(countDays);
 
         return _mapper.Map<List<LeadForStatusUpdateResponse>>(leadsBdate);
     }

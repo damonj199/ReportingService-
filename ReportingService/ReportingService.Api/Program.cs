@@ -1,5 +1,6 @@
 using MassTransit;
 using ReportingService.Api.Configure;
+using ReportingService.Api.Consumer;
 using ReportingService.Bll;
 using ReportingService.Core.Models.Requestes;
 using ReportingService.Core.Models.Responses;
@@ -13,12 +14,26 @@ try
 
     builder.Services.AddMassTransit(x =>
     {
-        x.UsingRabbitMq();
+        x.AddConsumer<Consumer>();
+
+        x.UsingRabbitMq((context, cfg) =>
+        {
+            cfg.Host("rabbitmq://localhost", h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+
+            cfg.ReceiveEndpoint("your_queue_name", e =>
+            {
+                e.ConfigureConsumer<Consumer>(context);
+            });
+        });
     });
 
     Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(builder.Configuration)
-        .CreateLogger(); //
+        .CreateLogger();
 
     builder.Services.ConfigureApiServices(builder.Configuration);
 

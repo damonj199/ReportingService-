@@ -33,6 +33,7 @@ public class TransactionsService : ITransactionsService
     {
         _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
         List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsync(id);
+
         return _mapper.Map<List<TransactionResponse>>(transactions);
     }
 
@@ -40,6 +41,7 @@ public class TransactionsService : ITransactionsService
     {
         _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
         List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByAccountIdAsync(id);
+
         return _mapper.Map<List<TransactionWithAccountIdResponse>>(transactions);
     }
 
@@ -49,21 +51,5 @@ public class TransactionsService : ITransactionsService
         List<AccountNegativBalanceDto> negBalance = await _transactionRepository.GetAccountsWithNegativeBalanceAsync();
 
         return _mapper.Map<List<NegativBalanceResponse>>(negBalance);
-    }
-
-    public async Task<List<LeadForStatusUpdateResponse>> LeadWithTransactionsResponseAsync(int countDays)
-    {
-        if (countDays <= 0)
-        {
-            _logger.Information("не допустимое значение дней для отчета!");
-            return null;
-        }
-        else
-        {
-            _logger.Information("Вызываем метод репозитория и передаем в него кооличесво дней для отчета");
-            var leads = await _transactionRepository.LeadWithTransactionsResponseAsync(countDays);
-
-            return _mapper.Map<List<LeadForStatusUpdateResponse>>(leads);
-        }
     }
 }

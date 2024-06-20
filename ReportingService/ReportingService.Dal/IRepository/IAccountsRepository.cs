@@ -4,6 +4,6 @@ namespace ReportingService.Dal.IRepository
 {
     public interface IAccountsRepository
     {
-        Task<List<AccountDto>> LeadsIdFromAccountsAsync(int countDays);
+        Task<List<AccountDto>> AccountsWithTransactionsResponseAsync(int countDays);
     }
 }

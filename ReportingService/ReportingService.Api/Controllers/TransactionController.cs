@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
-using ReportingService.Bll.Services;
 using Serilog;
 
 namespace ReportingService.Api.Controllers
@@ -50,19 +49,10 @@ namespace ReportingService.Api.Controllers
         [HttpGet("accounts-negaiv-balace")]
         public async Task<ActionResult<List<NegativBalanceResponse>>> GetAccountsNegativBalanceAsync()
         {
-            _logger.Information("просим очень сильно сервис принять данные и вурнуть Response");
+            _logger.Information("просим, очень сильно, сервис принять данные и вурнуть Response");
             var negBalance = await _transactionsService.GetAccountsNegativBalanceAsync();
 
             return Ok(negBalance);
-        }
-
-        [HttpGet("/leads-with-transactions")]
-        public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> LeadWithTransactionsResponseAsync(int countDays)
-        {
-            _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
-            var leads = await _transactionsService.LeadWithTransactionsResponseAsync(countDays);
-
-            return Ok(leads);
         }
     }
 }
