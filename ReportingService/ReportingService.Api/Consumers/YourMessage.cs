@@ -1,4 +1,4 @@
-﻿namespace ReportingService.Api.Consumer
+﻿namespace ReportingService.Api.Consumers
 {
     public class YourMessage
     {

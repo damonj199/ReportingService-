@@ -27,10 +27,19 @@ public class ReportController : Controller
     }
 
     [HttpGet("/leads-with-transactions-and-birthday")]
-    public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetLeadsWithBirthdayTodayAsync(int countDays)
+    public async Task<ActionResult<List<LeadForStatusUpdateResponse>>> GetLeadsWithBirthdayTodayAsync()
     {
         _logger.Information("идем в сервис за данными");
-        var leads = await _leadService.GetLeadsWithBirthdayTodayAsync(countDays);
+        var leads = await _leadService.GetLeadsWithBirthdayTodayAsync();
+
+        return Ok(leads);
+    }
+
+    [HttpGet("dai-chto-nibyd'")]
+    public async Task<ActionResult<List<LeadResponse>>> LeadWithTransactionsResponseAsync(int countDays)
+    {
+        _logger.Information("идем в сервис за данными");
+        var leads = await _leadService.LeadWithTransactionsResponseAsync(countDays);
 
         return Ok(leads);
     }

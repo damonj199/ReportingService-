@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using ReportingService.Api.Consumers;
 
 namespace ReportingService.Api.Consumer;
 

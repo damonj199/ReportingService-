@@ -14,7 +14,7 @@ public class ReportingServiceContext : DbContext
 
     public ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : base(options)
     {
-    }
+    } 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<AccountStatus>();
@@ -32,9 +32,6 @@ public class ReportingServiceContext : DbContext
     {
         builder.Property(t => t.Amount)
             .HasPrecision(11, 4);
-
-        //builder.Property(t => t.Commission)
-        //    .IsRequired(false);
     }
 
     private void ConfigureLeadDto(EntityTypeBuilder<LeadDto> builder)

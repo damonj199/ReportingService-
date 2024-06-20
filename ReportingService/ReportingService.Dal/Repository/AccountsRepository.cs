@@ -19,6 +19,7 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
             .Include(t => t.Transactions.Where(t => t.Date >= startDate))
             .Include(leads => leads)
             .ToListAsync();
+
         return accounts;
     }
 
