@@ -21,21 +21,23 @@ namespace ReportingService.Dal.Repository
                 .ToListAsync();
         }
 
-        public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
-        {
-            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
-            return await _cxt.Transactions
-                .AsNoTracking()
-                .Where(t => t.Account.Id == id)
-                .ToListAsync();
-        }
+        //public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
+        //{
+        //    _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
+        //    return await _cxt.Transactions
+        //        .AsNoTracking()
+        //        .Where(t => t.Account.Lead.Id == id)
+        //        .ToListAsync();
+        //}
 
-        public async Task<List<TransactionDto>> GetTransactionsByAccountIdAsync(Guid id)
+        public async Task<List<TransactionDto>> GetTransactionsByPeriodDayAsync(int countDays)
         {
+            DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
+
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
             return await _cxt.Transactions
                 .AsNoTracking()
-                .Where(t => t.Id == id)
+                .Where(t => t.Date >= startDate)
                 .ToListAsync();
         }
 

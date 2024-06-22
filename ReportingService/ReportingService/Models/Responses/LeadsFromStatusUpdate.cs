@@ -3,8 +3,8 @@ using ReportingService.Core.Enums;
 
 namespace ReportingService.Bll.Models.Responses;
 
-public class LeadForStatusUpdateResponse
+public class LeadsFromStatusUpdate
 {
     public Guid Id { get; set; }
-    public DateOnly BirthDate { get; set; }
+    public List<AccountDto> Accounts { get; set; }
 }

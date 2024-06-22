@@ -9,7 +9,6 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
 {
     public LeadsRepository(ReportingServiceContext context): base(context)
     {
-        
     }
 
     public async Task<LeadDto> GetLeadFullInfoByIdAsync(Guid id)

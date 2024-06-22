@@ -28,20 +28,20 @@ namespace ReportingService.Api.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("by-lead/{leadId}")]
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
-        {
-            _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-            var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
+        //[HttpGet("by-lead/{leadId}")]
+        //public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
+        //{
+        //    _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
+        //    var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
 
-            return Ok(transactions);
-        }
+        //    return Ok(transactions);
+        //}
 
-        [HttpGet("by-account/{accountId}")]
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynс(Guid accountId)
+        [HttpGet("by-period")]
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByPeriodDayAsync(int countDays)
         {
             _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
-            var transactions = await _transactionsService.GetTransactionsByAccountIdAsync(accountId);
+            var transactions = await _transactionsService.GetTransactionsByPeriodDayAsync(countDays);
 
             return Ok(transactions);
         }

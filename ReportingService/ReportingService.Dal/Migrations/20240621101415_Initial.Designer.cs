@@ -13,7 +13,7 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240614083620_Initial")]
+    [Migration("20240621101415_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

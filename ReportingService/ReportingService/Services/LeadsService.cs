@@ -17,11 +17,11 @@ public class LeadsService : ILeadsService
         _mapper = mapper;
     }
 
-    public async Task<List<LeadResponse>> LeadWithTransactionsResponseAsync(int countDays)
+    public async Task<List<LeadsFromStatusUpdate>> LeadWithTransactionsResponseAsync(int countDays)
     {
         var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
 
-        return _mapper.Map<List<LeadResponse>>(leads);
+        return _mapper.Map<List<LeadsFromStatusUpdate>>(leads);
     }
     public async Task<LeadResponse> GetLeadFullInfoByIdAsync(Guid id)
     {
@@ -31,11 +31,11 @@ public class LeadsService : ILeadsService
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadForStatusUpdateResponse>> GetLeadsWithBirthdayTodayAsync()
+    public async Task<List<LeadsBirthDateResponse>> GetLeadsWithBirthdayTodayAsync()
     {
         _logger.Information("Идем в репозиторий искать лидов у кого др");
         var leadsBdate = await _leadRepository.GetLeadsWithBirthdayTodayAsync();
 
-        return _mapper.Map<List<LeadForStatusUpdateResponse>>(leadsBdate);
+        return _mapper.Map<List<LeadsBirthDateResponse>>(leadsBdate);
     }
 }

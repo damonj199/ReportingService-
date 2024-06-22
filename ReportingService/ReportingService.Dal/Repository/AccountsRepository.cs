@@ -17,7 +17,6 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
         var accounts = await _cxt.Accounts
             .AsNoTracking()
             .Include(t => t.Transactions.Where(t => t.Date >= startDate))
-            .Include(leads => leads)
             .ToListAsync();
 
         return accounts;
