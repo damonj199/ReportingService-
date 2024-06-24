@@ -10,9 +10,8 @@ public class LeadResponse
     public string Mail { get; set; }
     public string Phone { get; set; }
     public string Address { get; set; }
-    public LeadStatus Status { get; set; }
     public DateOnly BirthDate { get; set; }
-    //public int TimePerioInDays { get; set; }
+    public LeadStatus Status { get; set; }
     public List<AccountDto> Accounts { get; set; }
     public List<StatusHistoryDto> StatusHistory { get; set; }
 }

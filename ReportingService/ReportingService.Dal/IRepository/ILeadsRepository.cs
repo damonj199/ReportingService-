@@ -4,6 +4,7 @@ namespace ReportingService.Dal.IRepository;
 
 public interface ILeadsRepository
 {
-    Task<LeadDto> GetLeadByIdAsync(Guid id);
-    Task<List<LeadDto>> GetAllInfoLeadsAsync(int countDays);
+    Task<LeadDto> GetLeadFullInfoByIdAsync(Guid id);
+    Task<List<LeadDto>> GetLeadsWithBirthdayTodayAsync();
+    Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays);
 }

@@ -3,36 +3,44 @@ using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
 using Serilog;
 
-namespace ReportingService.Api.Controllers
+namespace ReportingService.Api.Controllers;
+
+[ApiController]
+[Route("/api/reports")]
+public class ReportController : Controller
 {
-    [ApiController]
-    [Route("/api/reports")]
-    public class ReportController : Controller
+    private readonly ILeadsService _leadService;
+    private readonly Serilog.ILogger _logger = Log.ForContext<ReportController>();
+
+    public ReportController(ILogger<ReportController> logger, ILeadsService leadService)
     {
-        private readonly ILeadsService _leadService;
-        private readonly Serilog.ILogger _logger = Log.ForContext<ReportController>();
+        _leadService = leadService;
+    }
 
-        public ReportController(ILogger<ReportController> logger, ILeadsService leadService)
-        {
-            _leadService = leadService;
-        }
+    [HttpGet("/lead-fullInfo-byId/{id}")]
+    public async Task<ActionResult<LeadResponse>> GetLeadFullInfoByIdAsync(Guid id)
+    {
+        _logger.Information("передаем id в сервис для поиска лида");
+        var leadId = await _leadService.GetLeadFullInfoByIdAsync(id);
 
-        [HttpGet("/lead/{id}")]
-        public async Task<ActionResult<LeadResponse>> GetLeadByIdAsync(Guid id)
-        {
-            _logger.Information("передаем id в сервис для поиска лида");
-            var leadId = await _leadService.GetLeadByIdAsync(id);
+        return Ok(leadId);
+    }
 
-            return Ok(leadId);
-        }
+    [HttpGet("/leads-birthdate")]
+    public async Task<ActionResult<List<LeadsBirthDateResponse>>> GetLeadsWithBirthdayTodayAsync()
+    {
+        _logger.Information("идем в сервис за данными");
+        var leads = await _leadService.GetLeadsWithBirthdayTodayAsync();
 
-        [HttpGet("/leads-with-transactions")]
-        public async Task<ActionResult<List<LeadResponse>>> GetAllInfoLeadsAsync(int countDays)
-        {
-            _logger.Information("получаем пертод дней для отчета и передаем их в сервис");
-            var leads = await _leadService.GetAllInfoLeadsAsync(countDays);
+        return Ok(leads);
+    }
 
-            return Ok(leads);
-        }
+    [HttpGet("/report-leads-with-transactions-for-period")]
+    public async Task<ActionResult<List<LeadsFromStatusUpdate>>> LeadWithTransactionsResponseAsync(int countDays)
+    {
+        _logger.Information("идем в сервис за данными");
+        var leads = await _leadService.LeadWithTransactionsResponseAsync(countDays);
+
+        return Ok(leads);
     }
 }

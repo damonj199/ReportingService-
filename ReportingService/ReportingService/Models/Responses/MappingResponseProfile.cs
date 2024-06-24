@@ -9,8 +9,12 @@ public class MappingResponseProfile : Profile
     public MappingResponseProfile()
     {
         CreateMap<TransactionDto, TransactionResponse>();
+        CreateMap<TransactionDto, TransactionWithAccountIdResponse>();
+        CreateMap<LeadDto, LeadsBirthDateResponse>();
         CreateMap<LeadDto, LeadResponse>();
-        CreateMap<AccountDto, AccountResponse>();
+        CreateMap<LeadDto, LeadsFromStatusUpdate>();
+        CreateMap<AccountDto, AccountForStatusUpdateResponse>();
+        CreateMap<AccountNegativBalanceDto, NegativBalanceResponse>();
     }
 }
 

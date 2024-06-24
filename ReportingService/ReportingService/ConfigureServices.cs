@@ -7,7 +7,7 @@ public static class ConfigureServices
 {
     public static void ConfigureBllServices(this IServiceCollection services)
     {
-        //services.AddScoped<IReportsService, ReportsService>();
+        services.AddScoped<IAccountsService, AccountsService>();
         services.AddScoped<ILeadsService, LeadsService>();
         services.AddScoped<ITransactionsService, TransactionsService>();
     }

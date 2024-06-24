@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using ReportingService.Core.Enums;
 using ReportingService.Dal;
 
 #nullable disable
@@ -17,12 +18,12 @@ namespace ReportingService.Dal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "account_status", new[] { "unknown", "active", "blocked" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "currency_type", new[] { "unknown", "rub", "usd", "eur", "jpy", "cny", "rsd", "bgn", "ars" });
-            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "lead_status", new[] { "unknown", "vip", "regular", "block" });
+            NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "lead_status", new[] { "unknown", "vip", "regular", "block", "administrator" });
             NpgsqlModelBuilderExtensions.HasPostgresEnum(modelBuilder, "transaction_type", new[] { "unknown", "deposit", "withdraw", "transfer" });
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
@@ -33,23 +34,23 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("Currency")
-                        .HasColumnType("integer")
+                    b.Property<CurrencyType>("Currency")
+                        .HasColumnType("currency_type")
                         .HasColumnName("currency");
 
-                    b.Property<Guid>("LeadsId")
+                    b.Property<Guid>("LeadId")
                         .HasColumnType("uuid")
-                        .HasColumnName("leads_id");
+                        .HasColumnName("lead_id");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<AccountStatus>("Status")
+                        .HasColumnType("account_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
                         .HasName("pk_accounts");
 
-                    b.HasIndex("LeadsId")
-                        .HasDatabaseName("ix_accounts_leads_id");
+                    b.HasIndex("LeadId")
+                        .HasDatabaseName("ix_accounts_lead_id");
 
                     b.ToTable("accounts", (string)null);
                 });
@@ -89,8 +90,8 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("character varying(12)")
                         .HasColumnName("phone");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<LeadStatus>("Status")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -114,8 +115,8 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("lead_id");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer")
+                    b.Property<LeadStatus>("Status")
+                        .HasColumnType("lead_status")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -143,20 +144,12 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
 
-                    b.Property<double>("Commission")
-                        .HasColumnType("double precision")
-                        .HasColumnName("commission");
-
-                    b.Property<int>("CurrencyType")
-                        .HasColumnType("integer")
-                        .HasColumnName("currency_type");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("integer")
+                    b.Property<TransactionType>("TransactionType")
+                        .HasColumnType("transaction_type")
                         .HasColumnName("transaction_type");
 
                     b.HasKey("Id")
@@ -170,14 +163,14 @@ namespace ReportingService.Dal.Migrations
 
             modelBuilder.Entity("ReportingService.Core.Dtos.AccountDto", b =>
                 {
-                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Leads")
+                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Lead")
                         .WithMany("Accounts")
-                        .HasForeignKey("LeadsId")
+                        .HasForeignKey("LeadId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_accounts_leads_leads_id");
+                        .HasConstraintName("fk_accounts_leads_lead_id");
 
-                    b.Navigation("Leads");
+                    b.Navigation("Lead");
                 });
 
             modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>

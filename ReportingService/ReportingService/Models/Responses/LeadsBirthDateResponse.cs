@@ -1,7 +1,7 @@
 ﻿namespace ReportingService.Bll.Models.Responses;
 
-public class TransactionWithAccountIdResponse
+public class LeadsBirthDateResponse
 {
     public Guid Id { get; set; }
-    public DateTime Date { get; set; }
+    //public DateOnly BirthDate { get; set; }
 }

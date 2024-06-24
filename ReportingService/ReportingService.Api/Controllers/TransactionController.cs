@@ -19,31 +19,40 @@ namespace ReportingService.Api.Controllers
         }
 
 
-        [HttpGet()]
-        public async Task<ActionResult<List<TransactionResponse>>> GetAllTransactionsAsync()
+        [HttpGet("/by-id/{id}")]
+        public async Task<ActionResult<TransactionResponse>> GetTransactionByIdsAsync(Guid id)
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationAllTransaction");
-            var transactions = await _transactionsService.GetAllTransactionsAsync();
+            var transactions = await _transactionsService.GetTransactionByIdsAsync(id);
 
             return Ok(transactions);
         }
 
-        [HttpGet("by-lead/{leadId}")]
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
-        {
-            _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-            var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
+        //[HttpGet("by-lead/{leadId}")]
+        //public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
+        //{
+        //    _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
+        //    var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
 
-            return Ok(transactions);
-        }
+        //    return Ok(transactions);
+        //}
 
-        [HttpGet("by-account/{accountId}")]
-        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByAccountIdAsynс(Guid accountId)
+        [HttpGet("by-period/{countDays}")]
+        public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByPeriodDayAsync(int countDays)
         {
             _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
-            var transactions = await _transactionsService.GetTransactionsByAccountIdAsync(accountId);
+            var transactions = await _transactionsService.GetTransactionsByPeriodDayAsync(countDays);
 
             return Ok(transactions);
+        }
+
+        [HttpGet("accounts-negaiv-balace")]
+        public async Task<ActionResult<List<NegativBalanceResponse>>> GetAccountsNegativBalanceAsync()
+        {
+            _logger.Information("просим, очень сильно, сервис принять данные и вурнуть Response");
+            var negBalance = await _transactionsService.GetAccountsNegativBalanceAsync();
+
+            return Ok(negBalance);
         }
     }
 }

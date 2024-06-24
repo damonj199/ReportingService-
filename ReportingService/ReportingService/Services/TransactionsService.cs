@@ -20,26 +20,36 @@ public class TransactionsService : ITransactionsService
         _transactionRepository = trunsactionRepository;
     }
 
-    public async Task<List<TransactionResponse>> GetAllTransactionsAsync()
+    public async Task<TransactionResponse> GetTransactionByIdsAsync(Guid id)
     {
         _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
-        var transactions = await _transactionRepository.GetAllTransactionsAsync();
+        TransactionDto transactions = await _transactionRepository.GetTransactionByIdAsync(id);
 
-        return _mapper.Map<List<TransactionResponse>>(transactions);
+        return _mapper.Map<TransactionResponse>(transactions);
 
     }
 
-    public async Task<List<TransactionResponse>> GetTransactionsByLeadIdAsync(Guid id)
-    {
-        _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsync(id);
-        return _mapper.Map<List<TransactionResponse>>(transactions);
-    }
+    //public async Task<List<TransactionResponse>> GetTransactionsByLeadIdAsync(Guid id)
+    //{
+    //    _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
+    //    List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsync(id);
 
-    public async Task<List<TransactionWithAccountIdResponse>> GetTransactionsByAccountIdAsync(Guid id)
+    //    return _mapper.Map<List<TransactionResponse>>(transactions);
+    //}
+
+    public async Task<List<TransactionResponse>> GetTransactionsByPeriodDayAsync(int countDays)
     {
         _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
-        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByAccountIdAsync(id);
-        return _mapper.Map<List<TransactionWithAccountIdResponse>>(transactions);
+        List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByPeriodDayAsync(countDays);
+
+        return _mapper.Map<List<TransactionResponse>>(transactions);
+    }
+
+    public async Task<List<NegativBalanceResponse>> GetAccountsNegativBalanceAsync()
+    {
+        _logger.Information("обращаемся к репозиторию, с методом получения акк");
+        List<AccountNegativBalanceDto> negBalance = await _transactionRepository.GetAccountsWithNegativeBalanceAsync();
+
+        return _mapper.Map<List<NegativBalanceResponse>>(negBalance);
     }
 }
