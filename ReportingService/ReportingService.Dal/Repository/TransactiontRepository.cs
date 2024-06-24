@@ -38,7 +38,7 @@ namespace ReportingService.Dal.Repository
             return await _cxt.Transactions
                 .AsNoTracking()
                 .Where(t => t.Date >= startDate)
-                .Take(50)
+                .Take(5000)
                 .ToListAsync();
         }
 
@@ -53,7 +53,8 @@ namespace ReportingService.Dal.Repository
                     AccountId = j.Key,
                     Sum = j.Sum(t => t.Amount)
                 })
-                .Where(t => t.Sum < -10000)
+                .Where(t => t.Sum < 0)
+                .Take(5000)
                 .ToListAsync();
         }
     }
