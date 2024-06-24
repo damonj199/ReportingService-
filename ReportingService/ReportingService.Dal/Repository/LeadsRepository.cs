@@ -28,8 +28,14 @@ public class LeadsRepository: BaseRepository, ILeadsRepository
 
         var leads = await _cxt.Leads
             .AsNoTracking()
-            .Include(a => a.Accounts)
+            //.Select(l => new LeadMinDto
+            //{
+            //    l.Id,
+            //    l.Accounts
+            //})
+            .Include(a => a.Accounts.Where(a => a.Status == Core.Enums.AccountStatus.Active))
             .ThenInclude(at => at.Transactions.Where(t => t.Date >= startDate))
+            .Take(100)
             .ToListAsync();
         return leads;
     }

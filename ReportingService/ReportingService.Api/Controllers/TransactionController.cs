@@ -19,11 +19,11 @@ namespace ReportingService.Api.Controllers
         }
 
 
-        [HttpGet()]
-        public async Task<ActionResult<List<TransactionResponse>>> GetAllTransactionsAsync()
+        [HttpGet("/by-id/{id}")]
+        public async Task<ActionResult<TransactionResponse>> GetTransactionByIdsAsync(Guid id)
         {
             _logger.Information($"ReportingService - TransactionController - GetInformationAllTransaction");
-            var transactions = await _transactionsService.GetAllTransactionsAsync();
+            var transactions = await _transactionsService.GetTransactionByIdsAsync(id);
 
             return Ok(transactions);
         }
@@ -37,7 +37,7 @@ namespace ReportingService.Api.Controllers
         //    return Ok(transactions);
         //}
 
-        [HttpGet("by-period")]
+        [HttpGet("by-period/{countDays}")]
         public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByPeriodDayAsync(int countDays)
         {
             _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");

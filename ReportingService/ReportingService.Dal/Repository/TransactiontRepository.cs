@@ -13,12 +13,12 @@ namespace ReportingService.Dal.Repository
         {
         }
 
-        public async Task<List<TransactionDto>> GetAllTransactionsAsync()
+        public async Task<TransactionDto> GetTransactionByIdAsync(Guid id)
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
             return await _cxt.Transactions
                 .AsNoTracking()
-                .ToListAsync();
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         //public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
@@ -38,6 +38,7 @@ namespace ReportingService.Dal.Repository
             return await _cxt.Transactions
                 .AsNoTracking()
                 .Where(t => t.Date >= startDate)
+                .Take(50)
                 .ToListAsync();
         }
 
@@ -52,7 +53,7 @@ namespace ReportingService.Dal.Repository
                     AccountId = j.Key,
                     Sum = j.Sum(t => t.Amount)
                 })
-                .Where(t => t.Sum < 0)
+                .Where(t => t.Sum < -10000)
                 .ToListAsync();
         }
     }

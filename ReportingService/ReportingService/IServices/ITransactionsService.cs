@@ -4,7 +4,7 @@ namespace ReportingService.Bll.IServices;
 
 public interface ITransactionsService
 {
-    Task<List<TransactionResponse>> GetAllTransactionsAsync();
+    Task<TransactionResponse> GetTransactionByIdsAsync(Guid id);
     //Task<List<TransactionResponse>> GetTransactionsByLeadIdAsync(Guid id);
     //Task<List<TransactionWithAccountIdResponse>> GetTransactionsByAccountIdAsync(Guid id);
     Task<List<NegativBalanceResponse>> GetAccountsNegativBalanceAsync();

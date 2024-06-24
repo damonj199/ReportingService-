@@ -20,12 +20,12 @@ public class TransactionsService : ITransactionsService
         _transactionRepository = trunsactionRepository;
     }
 
-    public async Task<List<TransactionResponse>> GetAllTransactionsAsync()
+    public async Task<TransactionResponse> GetTransactionByIdsAsync(Guid id)
     {
         _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
-        List<TransactionDto> transactions = await _transactionRepository.GetAllTransactionsAsync();
+        TransactionDto transactions = await _transactionRepository.GetTransactionByIdAsync(id);
 
-        return _mapper.Map<List<TransactionResponse>>(transactions);
+        return _mapper.Map<TransactionResponse>(transactions);
 
     }
 
