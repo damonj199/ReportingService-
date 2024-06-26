@@ -3,5 +3,5 @@
 public class LeadsBirthDateResponse
 {
     public Guid Id { get; set; }
-    //public DateOnly BirthDate { get; set; }
+    public DateOnly BirthDate { get; set; }
 }

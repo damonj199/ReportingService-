@@ -3,5 +3,6 @@
 public class LeadMinDto
 {
     public Guid Id { get; set; }
-    public AccountDto Account { get; set; }
+    public int? Month { get; set; }
+    public int? Day { get; set; }
 }

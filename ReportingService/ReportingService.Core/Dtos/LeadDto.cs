@@ -1,6 +1,4 @@
 ﻿using ReportingService.Core.Enums;
-using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ReportingService.Core.Dtos;
 
@@ -12,6 +10,8 @@ public class LeadDto
     public string Phone { get; set; }
     public string Address { get; set; }
     public DateOnly BirthDate { get; set; }
+    public int? Month { get; set; }
+    public int? Day { get; set; }
     public LeadStatus Status { get; set; }
     public List<AccountDto> Accounts { get; set; }
     public List<StatusHistoryDto> StatusHistory { get; set; }

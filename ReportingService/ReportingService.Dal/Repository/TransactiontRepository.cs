@@ -35,17 +35,18 @@ namespace ReportingService.Dal.Repository
             DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
-            return await _cxt.Transactions
+            var transactions = _cxt.Transactions
                 .AsNoTracking()
                 .Where(t => t.Date >= startDate)
-                .Take(5000)
-                .ToListAsync();
+                .Take(5000);
+
+            return await transactions.ToListAsync();
         }
 
         public async Task<List<AccountNegativBalanceDto>> GetAccountsWithNegativeBalanceAsync()
         {
             _logger.Information("Идем в базу искать акк с отрицательным балансом");
-            return await _cxt.Transactions
+            var acc = _cxt.Transactions
                 .AsNoTracking()
                 .GroupBy(a => a.Account.Id)
                 .Select(j => new AccountNegativBalanceDto
@@ -54,8 +55,9 @@ namespace ReportingService.Dal.Repository
                     Sum = j.Sum(t => t.Amount)
                 })
                 .Where(t => t.Sum < 0)
-                .Take(5000)
-                .ToListAsync();
+                .Take(5000);
+
+             return await acc.ToListAsync();
         }
     }
 }

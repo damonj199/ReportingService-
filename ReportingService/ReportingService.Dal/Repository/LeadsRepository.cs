@@ -21,50 +21,60 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
         return leadId;
     }
 
-    public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
+    public async Task<List<LeadDto>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
-        DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
+        DateTime toDay = DateTime.Today;
+        DateTime startDay = DateTime.Today.AddDays(-periodBdate);
 
-        var leads = await _cxt.Leads
-            .AsNoTracking()
-            .Include(a => a.Accounts)
-            .ThenInclude(at => at.Transactions)
-            .Where(l => l.Accounts.Any(a => a.Transactions.Any(t => t.Date >= startDate)))
-            .Select(l => new LeadDto
-            {
-                Id = l.Id,
-                Name = l.Name,
-                Status = l.Status,
-                BirthDate = l.BirthDate,
-                Accounts = l.Accounts.Select(a => new AccountDto
-                {
-                    Id = a.Id,
-                    Transactions = a.Transactions
-                     .Where(t => t.Date >= startDate)
-                     .Select(t => new TransactionDto
-                     {
-                         Id = t.Id,
-                         TransactionType = t.TransactionType,
-                         Amount = t.Amount,
-                         Date = t.Date
-                     }).ToList()
-                }).ToList()
-            })
-               .Take(1000)
-               .ToListAsync();
+        if (startDay.Month != toDay.Month)
+        {
+            var leads = _cxt.Leads
+                .AsNoTracking()
+                .Where(l => l.Month == startDay.Month && l.Day > startDay.Day || l.Month == toDay.Month && l.Day <= toDay.Day);
 
-        return leads;
+            return await leads.ToListAsync();
+        }
+        else
+        {
+            var leads = _cxt.Leads
+                .AsNoTracking()
+                .Where(l => l.Month == startDay.Month && l.Day > startDay.Day && l.Month == toDay.Month && l.Day <= toDay.Day);
+
+            return await leads.ToListAsync();
+        }
     }
 
-    public async Task<List<LeadDto>> GetLeadsWithBirthdayTodayAsync()
-    {
-        DateTime today = DateTime.Today;
+    //public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
+    //{
+    //    DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
-        var leads = await _cxt.Leads
-            .AsNoTracking()
-            .Where(l => l.BirthDate.Month == today.Month && l.BirthDate.Day == today.Day)
-            .ToListAsync();
+    //    var leads = _cxt.Leads
+    //        .AsNoTracking()
+    //        .Include(a => a.Accounts)
+    //        .ThenInclude(at => at.Transactions)
+    //        .Where(l => l.Accounts.Any(a => a.Transactions.Any(t => t.Date >= startDate)))
+    //        .Select(l => new LeadDto
+    //        {
+    //            Id = l.Id,
+    //            Name = l.Name,
+    //            Status = l.Status,
+    //            BirthDate = l.BirthDate,
+    //            Accounts = l.Accounts.Select(a => new AccountDto
+    //            {
+    //                Id = a.Id,
+    //                Transactions = a.Transactions
+    //                 .Where(t => t.Date >= startDate)
+    //                 .Select(t => new TransactionDto
+    //                 {
+    //                     Id = t.Id,
+    //                     TransactionType = t.TransactionType,
+    //                     Amount = t.Amount,
+    //                     Date = t.Date
+    //                 }).ToList()
+    //            }).ToList()
+    //        })
+    //        .Take(1000);
 
-        return leads;
-    }
+    //    return await leads.ToListAsync(); ;
+    //}
 }

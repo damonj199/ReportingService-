@@ -17,12 +17,6 @@ public class LeadsService : ILeadsService
         _mapper = mapper;
     }
 
-    public async Task<List<LeadsFromStatusUpdate>> LeadWithTransactionsResponseAsync(int countDays)
-    {
-        var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
-
-        return _mapper.Map<List<LeadsFromStatusUpdate>>(leads);
-    }
     public async Task<LeadResponse> GetLeadFullInfoByIdAsync(Guid id)
     {
         _logger.Information("вызываем репозитория для поиска лида по id");
@@ -31,11 +25,18 @@ public class LeadsService : ILeadsService
         return _mapper.Map<LeadResponse>(leadId);
     }
 
-    public async Task<List<LeadsBirthDateResponse>> GetLeadsWithBirthdayTodayAsync()
+    public async Task<List<LeadsBirthDateResponse>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
         _logger.Information("Идем в репозиторий искать лидов у кого др");
-        var leadsBdate = await _leadRepository.GetLeadsWithBirthdayTodayAsync();
+        var leadsBdate = await _leadRepository.GetLeadsWithBirthdayAsync(periodBdate);
 
         return _mapper.Map<List<LeadsBirthDateResponse>>(leadsBdate);
     }
+
+    //public async Task<List<LeadsFromStatusUpdate>> LeadWithTransactionsResponseAsync(int countDays)
+    //{
+    //    var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
+
+    //    return _mapper.Map<List<LeadsFromStatusUpdate>>(leads);
+    //}
 }
