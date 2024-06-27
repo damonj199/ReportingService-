@@ -13,7 +13,6 @@ public class MappingResponseProfile : Profile
         CreateMap<LeadDto, LeadsBirthDateResponse>();
         CreateMap<LeadDto, LeadResponse>();
         CreateMap<LeadDto, LeadsFromStatusUpdate>();
-        CreateMap<LeadMinDto, LeadsFromStatusUpdate>();
         CreateMap<AccountDto, AccountForStatusUpdateResponse>();
         CreateMap<AccountNegativBalanceDto, NegativBalanceResponse>();
     }

@@ -35,10 +35,12 @@ namespace ReportingService.Dal.Repository
             DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
+
             var transactions = _cxt.Transactions
                 .AsNoTracking()
                 .Where(t => t.Date >= startDate)
-                .Take(5000);
+                .Include(t => t.Account.Lead)
+                .Take(500);
 
             return await transactions.ToListAsync();
         }

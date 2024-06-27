@@ -75,6 +75,19 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
     //        })
     //        .Take(1000);
 
-    //    return await leads.ToListAsync(); ;
+    //    return await leads.ToListAsync();
     //}
+
+    public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
+    {
+        DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
+
+        var leads = _cxt.Leads
+            .AsNoTracking()
+            .Include(a => a.Accounts)
+            .ThenInclude(t => t.Transactions)
+            .Where(l => l.Accounts.Any(a => a.Transactions.Any(t => t.Date >= startDate)));
+
+        return await leads.ToListAsync();
+    }
 }

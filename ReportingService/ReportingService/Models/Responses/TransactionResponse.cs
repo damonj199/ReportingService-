@@ -10,7 +10,7 @@ namespace ReportingService.Bll.Models.Responses
         public TransactionType TransactionType { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-
+        public LeadDto Lead { get; set; }
     }
 }
 

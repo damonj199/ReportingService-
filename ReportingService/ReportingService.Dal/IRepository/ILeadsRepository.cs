@@ -6,5 +6,5 @@ public interface ILeadsRepository
 {
     Task<LeadDto> GetLeadFullInfoByIdAsync(Guid id);
     Task<List<LeadDto>> GetLeadsWithBirthdayAsync(int periodBdate);
-    //Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays);
+    Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays);
 }

@@ -14,12 +14,12 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
     {
         DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
-        var accounts = await _cxt.Accounts
+        var accounts = _cxt.Accounts
             .AsNoTracking()
             .Include(t => t.Transactions.Where(t => t.Date >= startDate))
-            .ToListAsync();
+            .Take(500);
 
-        return accounts;
+        return await accounts.ToListAsync();
     }
 
 }

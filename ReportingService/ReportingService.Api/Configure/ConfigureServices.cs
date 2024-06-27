@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using ReportingService.Api.Consumer;
-using ReportingService.Core.Models.Requestes;
 using ReportingService.Core.Models.Responses;
 
 namespace ReportingService.Api.Configure;
@@ -13,7 +12,7 @@ public static class ConfigureServices
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.ConfigureDB(configurationManager);
-        services.AddAutoMapper(typeof(MappingRequestProfile), typeof(MappingResponseProfile));
+        services.AddAutoMapper(typeof(MappingResponseProfile));
         services.AddControllersWithViews()
         .AddNewtonsoftJson(
             options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
