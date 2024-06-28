@@ -8,7 +8,7 @@ public class MappingResponseProfile : Profile
 {
     public MappingResponseProfile()
     {
-        CreateMap<TransactionDto, TransactionResponse>();
+        CreateMap<TransactionDto, TransactionResponse>().ForMember(dest => dest.LeadId, opt => opt.MapFrom(src => src.Account.LeadId));
         CreateMap<TransactionDto, TransactionWithAccountIdResponse>();
         CreateMap<LeadDto, LeadsBirthDateResponse>();
         CreateMap<LeadDto, LeadResponse>();

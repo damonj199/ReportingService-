@@ -1,8 +1,9 @@
 ﻿using ReportingService.Core.Enums;
 
 namespace Messaging.Shared;
-    public class TransactionCreated
-{
+
+public class TransactionCreated
+{   
     public Guid Id { get; set; }
     public Guid AccountId { get; set; }
     public TransactionType TransactionType { get; set; }

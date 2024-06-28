@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Messaging.Shared;
 using ReportingService.Api.Consumer;
 using ReportingService.Core.Models.Responses;
 
@@ -21,6 +22,9 @@ public static class ConfigureServices
         services.AddMassTransit(x =>
         {
             x.AddConsumer<TransactionsConsumer>();
+            x.AddConsumer<AccountCreatedConsumer>();
+            x.AddConsumer<AccountBlockedConsumer>();
+            x.AddConsumer<AccountUpdatedStatusConsumer>();
 
             x.UsingRabbitMq((context, cfg) =>
             {

@@ -68,6 +68,8 @@ public class ReportingServiceContext : DbContext
     {
         builder.HasMany(a => a.Transactions)
             .WithOne(t => t.Account);
+
+        
     }
     private void ConfigureStatusHistoryDto(EntityTypeBuilder<StatusHistoryDto> builder)
     {

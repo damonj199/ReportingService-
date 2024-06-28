@@ -36,10 +36,10 @@ namespace ReportingService.Dal.Repository
 
             _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
 
-            var transactions = _cxt.Transactions
+            var transactions = _cxt.Transactions.Include(a => a.Account)
                 .AsNoTracking()
                 .Where(t => t.Date >= startDate)
-                .Include(t => t.Account.Lead)
+                //.Include(t => t.Account.Lead)
                 .Take(500);
 
             return await transactions.ToListAsync();

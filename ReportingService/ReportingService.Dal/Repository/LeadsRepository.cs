@@ -26,22 +26,17 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
         DateTime toDay = DateTime.Today;
         DateTime startDay = DateTime.Today.AddDays(-periodBdate);
 
-        if (startDay.Month != toDay.Month)
-        {
-            var leads = _cxt.Leads
-                .AsNoTracking()
-                .Where(l => l.Month == startDay.Month && l.Day > startDay.Day || l.Month == toDay.Month && l.Day <= toDay.Day);
+        IQueryable<LeadDto> leads;
 
-            return await leads.ToListAsync();
-        }
-        else
-        {
-            var leads = _cxt.Leads
+        leads = startDay.Month != toDay.Month ?
+            _cxt.Leads
+                .AsNoTracking()
+                .Where(l => l.Month == startDay.Month && l.Day > startDay.Day || l.Month == toDay.Month && l.Day <= toDay.Day) :
+            _cxt.Leads
                 .AsNoTracking()
                 .Where(l => l.Month == startDay.Month && l.Day > startDay.Day && l.Month == toDay.Month && l.Day <= toDay.Day);
 
-            return await leads.ToListAsync();
-        }
+        return await leads.ToListAsync();
     }
 
     //public async Task<List<LeadDto>> LeadWithTransactionsResponseAsync(int countDays)
