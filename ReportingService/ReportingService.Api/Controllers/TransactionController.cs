@@ -28,15 +28,6 @@ namespace ReportingService.Api.Controllers
             return Ok(transactions);
         }
 
-        //[HttpGet("by-lead/{leadId}")]
-        //public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByLeadIdAsync(Guid leadId)
-        //{
-        //    _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-        //    var transactions = await _transactionsService.GetTransactionsByLeadIdAsync(leadId);
-
-        //    return Ok(transactions);
-        //}
-
         [HttpGet("by-period/{countDays}")]
         public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByPeriodDayAsync(int countDays)
         {

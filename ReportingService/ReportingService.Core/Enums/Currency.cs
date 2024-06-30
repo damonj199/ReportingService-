@@ -1,6 +1,6 @@
 ﻿namespace ReportingService.Core.Enums;
 
-public enum CurrencyType
+public enum Currency
 {
     Unknown = 0,
     RUB = 1,

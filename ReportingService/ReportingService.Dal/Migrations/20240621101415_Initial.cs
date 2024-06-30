@@ -40,7 +40,7 @@ namespace ReportingService.Dal.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    currency = table.Column<CurrencyType>(type: "currency_type", nullable: false),
+                    currency = table.Column<Currency>(type: "currency_type", nullable: false),
                     status = table.Column<AccountStatus>(type: "account_status", nullable: false),
                     lead_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },

@@ -21,12 +21,12 @@ namespace ReportingService.Dal.Migrations
                 .OldAnnotation("Npgsql:Enum:lead_status", "unknown,vip,regular,block,administrator")
                 .OldAnnotation("Npgsql:Enum:transaction_type", "unknown,deposit,withdraw,transfer");
 
-            migrationBuilder.AlterColumn<CurrencyType>(
+            migrationBuilder.AlterColumn<Currency>(
                 name: "currency",
                 table: "accounts",
                 type: "currency",
                 nullable: false,
-                oldClrType: typeof(CurrencyType),
+                oldClrType: typeof(Currency),
                 oldType: "currency_type");
         }
 
@@ -43,12 +43,12 @@ namespace ReportingService.Dal.Migrations
                 .OldAnnotation("Npgsql:Enum:lead_status", "unknown,vip,regular,block,administrator")
                 .OldAnnotation("Npgsql:Enum:transaction_type", "unknown,deposit,withdraw,transfer");
 
-            migrationBuilder.AlterColumn<CurrencyType>(
+            migrationBuilder.AlterColumn<Currency>(
                 name: "currency",
                 table: "accounts",
                 type: "currency_type",
                 nullable: false,
-                oldClrType: typeof(CurrencyType),
+                oldClrType: typeof(Currency),
                 oldType: "currency");
         }
     }

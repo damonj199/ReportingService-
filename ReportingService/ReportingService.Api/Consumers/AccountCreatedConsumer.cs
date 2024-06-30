@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class AccountCreatedConsumer : IConsumer<AccountCreated>
 {
-    private readonly ILogger<AccountCreatedConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<AccountCreatedConsumer>();
 
     public AccountCreatedConsumer(ILogger<AccountCreatedConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<AccountCreated> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: account created {Text}", context.Message.Id);
 
         await Task.CompletedTask;
     }

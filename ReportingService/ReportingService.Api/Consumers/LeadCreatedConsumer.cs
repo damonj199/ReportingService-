@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class LeadCreatedConsumer : IConsumer<LeadCreated>
 {
-    private readonly ILogger<LeadCreatedConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<LeadCreatedConsumer>();
 
     public LeadCreatedConsumer(ILogger<LeadCreatedConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<LeadCreated> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: lead created {Text}", context.Message.Name);
 
         await Task.CompletedTask;
     }

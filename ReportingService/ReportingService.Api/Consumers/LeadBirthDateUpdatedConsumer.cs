@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class LeadBirthDateUpdatedConsumer :IConsumer<LeadBirthDateUpdated>
 {
-    private readonly ILogger<LeadBirthDateUpdatedConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<LeadBirthDateUpdatedConsumer>();
 
     public LeadBirthDateUpdatedConsumer(ILogger<LeadBirthDateUpdatedConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<LeadBirthDateUpdated> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: update Bdate {Text}", context.Message.BirthDate);
 
         await Task.CompletedTask;
     }

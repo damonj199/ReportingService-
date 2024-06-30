@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class AccountUpdatedStatusConsumer : IConsumer<AccountUpdatedStatus>
 {
-    private readonly ILogger<AccountUpdatedStatusConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<AccountUpdatedStatusConsumer>();
 
     public AccountUpdatedStatusConsumer(ILogger<AccountUpdatedStatusConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<AccountUpdatedStatus> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: update status {Text}", context.Message.Status);
 
         await Task.CompletedTask;
     }

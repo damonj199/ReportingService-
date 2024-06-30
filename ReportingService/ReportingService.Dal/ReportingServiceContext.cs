@@ -18,7 +18,7 @@ public class ReportingServiceContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresEnum<AccountStatus>();
-        modelBuilder.HasPostgresEnum<CurrencyType>();
+        modelBuilder.HasPostgresEnum<Currency>();
         modelBuilder.HasPostgresEnum<LeadStatus>();
         modelBuilder.HasPostgresEnum<TransactionType>();
 

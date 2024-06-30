@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class LeadDeletedConsumer : IConsumer<LeadDeleted>
 {
-    private readonly ILogger<LeadDeletedConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<LeadDeletedConsumer>();
 
     public LeadDeletedConsumer(ILogger<LeadDeletedConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<LeadDeleted> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: lead daleted {Text}", context.Message.Id);
 
         await Task.CompletedTask;
     }

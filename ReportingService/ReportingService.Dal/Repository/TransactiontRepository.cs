@@ -21,15 +21,6 @@ namespace ReportingService.Dal.Repository
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        //public async Task<List<TransactionDto>> GetTransactionsByLeadIdAsync(Guid id)
-        //{
-        //    _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByLeadIdAsynk");
-        //    return await _cxt.Transactions
-        //        .AsNoTracking()
-        //        .Where(t => t.Account.Lead.Id == id)
-        //        .ToListAsync();
-        //}
-
         public async Task<List<TransactionDto>> GetTransactionsByPeriodDayAsync(int countDays)
         {
             DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
@@ -38,9 +29,7 @@ namespace ReportingService.Dal.Repository
 
             var transactions = _cxt.Transactions.Include(a => a.Account)
                 .AsNoTracking()
-                .Where(t => t.Date >= startDate)
-                //.Include(t => t.Account.Lead)
-                .Take(500);
+                .Where(t => t.Date >= startDate);
 
             return await transactions.ToListAsync();
         }
@@ -56,8 +45,7 @@ namespace ReportingService.Dal.Repository
                     AccountId = j.Key,
                     Sum = j.Sum(t => t.Amount)
                 })
-                .Where(t => t.Sum < 0)
-                .Take(5000);
+                .Where(t => t.Sum < 0);
 
              return await acc.ToListAsync();
         }

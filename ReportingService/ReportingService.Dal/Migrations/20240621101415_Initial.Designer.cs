@@ -37,7 +37,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<CurrencyType>("Currency")
+                    b.Property<Currency>("Currency")
                         .HasColumnType("currency_type")
                         .HasColumnName("currency");
 

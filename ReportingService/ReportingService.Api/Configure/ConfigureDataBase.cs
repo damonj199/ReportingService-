@@ -15,7 +15,7 @@ public static class DataBaseExtansions
                 .GetConnectionString("ReportingService"))
                 .UseSnakeCaseNamingConvention());
 
-        NpgsqlConnection.GlobalTypeMapper.MapEnum<CurrencyType>();
+        NpgsqlConnection.GlobalTypeMapper.MapEnum<Currency>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<TransactionType>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<AccountStatus>();
         NpgsqlConnection.GlobalTypeMapper.MapEnum<LeadStatus>();

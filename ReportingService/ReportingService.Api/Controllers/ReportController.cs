@@ -34,13 +34,4 @@ public class ReportController : Controller
 
         return Ok(leads);
     }
-
-    [HttpGet("/report-leads-with-transactions-for-period")]
-    public async Task<ActionResult<List<LeadsFromStatusUpdate>>> LeadWithTransactionsResponseAsync(int countDays)
-    {
-        _logger.Information("идем в сервис за данными");
-        var leads = await _leadService.LeadWithTransactionsResponseAsync(countDays);
-
-        return Ok(leads);
-    }
 }

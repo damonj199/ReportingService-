@@ -1,19 +1,19 @@
 ﻿using MassTransit;
 using Messaging.Shared;
+using Serilog;
 
 namespace ReportingService.Api.Consumer;
 
 public class AccountBlockedConsumer : IConsumer<AccountBlocked>
 {
-    private readonly ILogger<AccountBlockedConsumer> _logger;
+    private readonly Serilog.ILogger _logger = Log.ForContext<AccountBlockedConsumer>();
 
     public AccountBlockedConsumer(ILogger<AccountBlockedConsumer> logger)
     {
-        _logger = logger;
     }
     public async Task Consume(ConsumeContext<AccountBlocked> context)
     {
-        _logger.LogInformation("Received message: {Text}", context.Message);
+        _logger.Information("Received message: account blocked {Text}", context.Message.Id);
 
         await Task.CompletedTask;
     }

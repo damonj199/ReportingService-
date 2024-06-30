@@ -32,11 +32,4 @@ public class LeadsService : ILeadsService
 
         return _mapper.Map<List<LeadsBirthDateResponse>>(leadsBdate);
     }
-
-    public async Task<List<LeadsFromStatusUpdate>> LeadWithTransactionsResponseAsync(int countDays)
-    {
-        var leads = await _leadRepository.LeadWithTransactionsResponseAsync(countDays);
-
-        return _mapper.Map<List<LeadsFromStatusUpdate>>(leads);
-    }
 }

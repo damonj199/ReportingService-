@@ -3,7 +3,6 @@ using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
 using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
-using ReportingService.Dal.Repository;
 using Serilog;
 
 namespace ReportingService.Bll.Services;
@@ -28,14 +27,6 @@ public class TransactionsService : ITransactionsService
         return _mapper.Map<TransactionResponse>(transactions);
 
     }
-
-    //public async Task<List<TransactionResponse>> GetTransactionsByLeadIdAsync(Guid id)
-    //{
-    //    _logger.Information($"ReportingService - TransactionController - GetInformationByAccountIdAsync");
-    //    List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByLeadIdAsync(id);
-
-    //    return _mapper.Map<List<TransactionResponse>>(transactions);
-    //}
 
     public async Task<List<TransactionResponse>> GetTransactionsByPeriodDayAsync(int countDays)
     {

@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Messaging.Shared;
 using ReportingService.Api.Consumer;
 using ReportingService.Core.Models.Responses;
 
@@ -22,6 +21,10 @@ public static class ConfigureServices
         services.AddMassTransit(x =>
         {
             x.AddConsumer<TransactionsConsumer>();
+            x.AddConsumer<LeadUpdatedConsumer>();
+            x.AddConsumer<LeadStatusUpdatedConsumer>();
+            x.AddConsumer<LeadDeletedConsumer>();
+            x.AddConsumer<LeadBirthDateUpdatedConsumer>();
             x.AddConsumer<AccountCreatedConsumer>();
             x.AddConsumer<AccountBlockedConsumer>();
             x.AddConsumer<AccountUpdatedStatusConsumer>();
@@ -32,8 +35,47 @@ public static class ConfigureServices
                 {
                     e.ConfigureConsumer<TransactionsConsumer>(context);
                 });
+
+                cfg.ReceiveEndpoint("LeadUpdated", e =>
+                {
+                    e.ConfigureConsumer<LeadUpdatedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("LeadStatusUpdated", e =>
+                {
+                    e.ConfigureConsumer<LeadStatusUpdatedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("LeadDeleted", e =>
+                {
+                    e.ConfigureConsumer<LeadDeletedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("LeadCreated", e =>
+                {
+                    e.ConfigureConsumer<LeadCreatedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("LeadBirthDateUpdated", e =>
+                {
+                    e.ConfigureConsumer<LeadBirthDateUpdatedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("AccountUpdatedStatus", e =>
+                {
+                    e.ConfigureConsumer<AccountUpdatedStatusConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("AccountBlocked", e =>
+                {
+                    e.ConfigureConsumer<AccountBlockedConsumer>(context);
+                });
+
+                cfg.ReceiveEndpoint("AccountCreated", e =>
+                {
+                    e.ConfigureConsumer<AccountCreatedConsumer>(context);
+                });
             });
         });
-        //services.AddSingleton<>();
     }
 }
