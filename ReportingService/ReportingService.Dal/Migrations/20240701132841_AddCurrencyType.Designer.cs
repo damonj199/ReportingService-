@@ -13,8 +13,8 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240627154131_UpdateDatabase")]
-    partial class UpdateDatabase
+    [Migration("20240701132841_AddCurrencyType")]
+    partial class AddCurrencyType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,6 +154,10 @@ namespace ReportingService.Dal.Migrations
                         .HasPrecision(11, 4)
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
+
+                    b.Property<Currency?>("Currency")
+                        .HasColumnType("currency")
+                        .HasColumnName("currency");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone")

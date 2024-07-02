@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
+using Serilog;
 
 namespace ReportingService.Dal.Repository;
 
 public class LeadsRepository : BaseRepository, ILeadsRepository
 {
+    private readonly ILogger _logger = Log.ForContext<LeadsRepository>();
     public LeadsRepository(ReportingServiceContext context) : base(context)
     {
     }
@@ -18,8 +20,16 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
             .ThenInclude(at => at.Transactions)
             .FirstOrDefaultAsync(a => a.Id == id);
 
+        _logger.Information("Достали все данные по лиду из базы");
+
         return leadId;
     }
+
+    //public async Task<LeadDto> GetLeadByIdAsync(Guid id)
+    //{
+    //    _logger.Information("Ищем лида по id");
+    //    return await _cxt.Leads.FirstOrDefaultAsync(a => a.Id == id);
+    //}
 
     public async Task<List<LeadDto>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
@@ -39,4 +49,28 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
         return await leads.ToListAsync();
     }
 
+    public async Task UpdateLeadAsync(LeadDto leadDto)
+    {
+        _cxt.Leads.Update(leadDto);
+        await _cxt.SaveChangesAsync();
+        _logger.Information($"Данные пользователя {leadDto.Id} обновлены");
+    }
+
+    public async Task<Guid> AddLeadAsync(LeadDto lead)
+    {
+        await _cxt.Leads.AddAsync(lead);
+        await _cxt.SaveChangesAsync();
+
+        _logger.Information($"Добавлен новый пользователь {lead.Name}");
+
+        return lead.Id;
+    }
+
+    public async Task DeleteLeadAsync(LeadDto lead)
+    {
+        _cxt.Leads.Remove(lead);
+        await _cxt.SaveChangesAsync();
+
+        _logger.Information("Пользователь удален успешно!");
+    }
 }

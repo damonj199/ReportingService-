@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ReportingService.Bll.IServices;
 using ReportingService.Bll.Models.Responses;
+using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
 
@@ -31,5 +32,24 @@ public class LeadsService : ILeadsService
         var leadsBdate = await _leadRepository.GetLeadsWithBirthdayAsync(periodBdate);
 
         return _mapper.Map<List<LeadsBirthDateResponse>>(leadsBdate);
+    }
+
+    public async Task<LeadDto> AddLeadAsync(LeadDto lead)
+    {
+        _logger.Information("идем в репозиторий, что бы добавить лида в БД");
+        await _leadRepository.AddLeadAsync(lead);
+        return lead;
+    }
+
+    public async Task UpdateLeadAsync(LeadDto lead)
+    {
+        _logger.Information("передаем данные в репозиторий для обновления");
+        await _leadRepository.UpdateLeadAsync(lead);
+    }
+
+    public async Task DeletedLeadAsync(LeadDto lead)
+    {
+        _logger.Information("Передаем данные в репозиторий для удаления лида");
+        await _leadRepository.DeleteLeadAsync(lead);
     }
 }

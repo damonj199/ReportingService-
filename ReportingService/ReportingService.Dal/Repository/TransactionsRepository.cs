@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Messaging.Shared;
+using Microsoft.EntityFrameworkCore;
 using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
 
 namespace ReportingService.Dal.Repository
 {
-    public class TransactiontRepository : BaseRepository, ITransactiontRepository
+    public class TransactionsRepository : BaseRepository, ITransactiontRepository
     {
-        private readonly ILogger _logger = Log.ForContext<TransactiontRepository>();
+        private readonly ILogger _logger = Log.ForContext<TransactionsRepository>();
 
-        public TransactiontRepository(ReportingServiceContext context) : base(context)
+        public TransactionsRepository(ReportingServiceContext context) : base(context)
         {
         }
 
@@ -17,8 +18,7 @@ namespace ReportingService.Dal.Repository
         {
             _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
             return await _cxt.Transactions
-                .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<List<TransactionDto>> GetTransactionsByPeriodDayAsync(int countDays)
@@ -48,6 +48,21 @@ namespace ReportingService.Dal.Repository
                 .Where(t => t.Sum < 0);
 
              return await acc.ToListAsync();
+        }
+
+        public async Task<TransactionDto> AddTransactions(TransactionDto transaction)
+        {
+            if (transaction == null)
+            {
+                _logger.Information("Throwing an error if the transaction is null. / Выдача ошибки, если транзакция равна null.");
+                throw new();
+            }
+            
+            _logger.Information($"Saving the transaction in the database. / Сохранение транзакции в базе.");
+            _cxt.Transactions.Add(transaction);
+
+            await _cxt.SaveChangesAsync();
+            return transaction;
         }
     }
 }

@@ -24,6 +24,7 @@ public static class ConfigureServices
             x.AddConsumer<LeadUpdatedConsumer>();
             x.AddConsumer<LeadStatusUpdatedConsumer>();
             x.AddConsumer<LeadDeletedConsumer>();
+            x.AddConsumer<LeadCreatedConsumer>();
             x.AddConsumer<LeadBirthDateUpdatedConsumer>();
             x.AddConsumer<AccountCreatedConsumer>();
             x.AddConsumer<AccountBlockedConsumer>();

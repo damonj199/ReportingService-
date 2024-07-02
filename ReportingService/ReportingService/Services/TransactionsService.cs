@@ -19,6 +19,13 @@ public class TransactionsService : ITransactionsService
         _transactionRepository = trunsactionRepository;
     }
 
+    public async Task<TransactionDto> AddTransactions(TransactionDto transaction)
+    {
+        _logger.Information("попытаемся что нибудь сделать в сервисе");
+        TransactionDto transactions = await _transactionRepository.AddTransactions(transaction);
+
+        return transactions;
+    }
     public async Task<TransactionResponse> GetTransactionByIdsAsync(Guid id)
     {
         _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
