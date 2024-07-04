@@ -31,10 +31,10 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
         _logger.Information("Информация о аккаунте обновлена");
     }
 
-    public async Task BlockedAccount(AccountDto account)
-    {
-        await _cxt.Accounts.ExecuteUpdate(s => s.SetProperty(d => d.Status, d => AccountStatus.Blocked));
-        await _cxt.SaveChangesAsync();
-        _logger.Information("");
-    }
+    //public async Task BlockedAccount(AccountDto account)
+    //{
+    //    await _cxt.Accounts.ExecuteUpdate(s => s.SetProperty(d => d.Status, d => AccountStatus.Blocked));
+    //    await _cxt.SaveChangesAsync();
+    //    _logger.Information("");
+    //}
 }

@@ -25,9 +25,10 @@ public class TransactionsConsumer : IConsumer<TransactionCreated>
             Account = new AccountDto { Id = transactionCreated.AccountId },
             TransactionType = transactionCreated.TransactionType,
             Amount = transactionCreated.Amount,
-            Comission = transactionCreated.Comission,
+            CommissionAmount = transactionCreated.CommissionAmount,
             Currency = transactionCreated.Currency,
             Date = transactionCreated.Date,
+            AmountInRUB = transactionCreated.AmountInRUB
         };
 
         await _transactionsService.AddTransactions(transactionDto);

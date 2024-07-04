@@ -10,6 +10,7 @@ namespace ReportingService.Bll.Models.Responses
         public Currency Currency { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
+        public decimal? AmountInRUB { get; set; }
     }
 }
 
