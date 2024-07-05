@@ -50,18 +50,15 @@ namespace ReportingService.Dal.Repository
              return await acc.ToListAsync();
         }
 
-        public async Task<TransactionDto> AddTransactions(TransactionDto transaction)
+        public async Task<TransactionDto> AddTransactionsAsync(TransactionDto transaction)
         {
-            if (transaction == null)
-            {
-                _logger.Information("Throwing an error if the transaction is null. / Выдача ошибки, если транзакция равна null.");
-                throw new();
-            }
-            
-            _logger.Information($"Saving the transaction in the database. / Сохранение транзакции в базе.");
-            _cxt.Transactions.Add(transaction);
+            _logger.Information($"polychili dto s service {transaction.Date}");
 
+            await _cxt.Transactions.AddAsync(transaction);
+            _logger.Information($"dobavlyem v dataBase {transaction.Currency}");
             await _cxt.SaveChangesAsync();
+
+            _logger.Information($"Saving the transaction in the database. {transaction.Id} / Сохранение транзакции в базе.");
             return transaction;
         }
     }

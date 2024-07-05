@@ -21,7 +21,7 @@ public class AccountsService : IAccountsService
         await _accountRepository.UpdateAccountAsync(account);
     }
 
-    public async Task<Guid> AddAccount(AccountDto account)
+    public async Task<Guid> AddAccountAsync(AccountDto account)
     {
         _logger.Information($"Account {account.Id}");
         await _accountRepository.AddAccountAsync(account);

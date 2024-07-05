@@ -19,11 +19,11 @@ public class TransactionsService : ITransactionsService
         _transactionRepository = trunsactionRepository;
     }
 
-    public async Task<TransactionDto> AddTransactions(TransactionDto transaction)
+    public async Task<TransactionDto> AddTransactionsAsync(TransactionDto transaction)
     {
-        _logger.Information("попытаемся что нибудь сделать в сервисе");
-        TransactionDto transactions = await _transactionRepository.AddTransactions(transaction);
-
+        _logger.Information("polychili dto s api");
+        TransactionDto transactions = await _transactionRepository.AddTransactionsAsync(transaction);
+        _logger.Information("smogli otdat' v repository?");
         return transactions;
     }
     public async Task<TransactionResponse> GetTransactionByIdsAsync(Guid id)

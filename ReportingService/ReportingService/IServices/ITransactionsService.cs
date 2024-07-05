@@ -8,5 +8,5 @@ public interface ITransactionsService
     Task<TransactionResponse> GetTransactionByIdsAsync(Guid id);
     Task<List<NegativBalanceResponse>> GetAccountsNegativBalanceAsync();
     Task<List<TransactionResponse>> GetTransactionsByPeriodDayAsync(int countDays);
-    Task<TransactionDto> AddTransactions(TransactionDto transaction);
+    Task<TransactionDto> AddTransactionsAsync(TransactionDto transaction);
 }

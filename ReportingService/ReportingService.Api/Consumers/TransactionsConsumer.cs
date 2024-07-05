@@ -16,21 +16,20 @@ public class TransactionsConsumer : IConsumer<TransactionCreated>
     }
     public async Task Consume(ConsumeContext<TransactionCreated> context)
     {
-        _logger.Information($"Received message: Message received and read");
-        var transactionCreated = context.Message;
+        _logger.Information($"Received message: Message received and read {context.Message.Amount} {context.Message.CommissionAmount}");
 
         var transactionDto = new TransactionDto
         {
-            Id = transactionCreated.Id,
-            Account = new AccountDto { Id = transactionCreated.AccountId },
-            TransactionType = transactionCreated.TransactionType,
-            Amount = transactionCreated.Amount,
-            CommissionAmount = transactionCreated.CommissionAmount,
-            Currency = transactionCreated.Currency,
-            Date = transactionCreated.Date,
-            AmountInRUB = transactionCreated.AmountInRUB
+            Id = context.Message.Id,
+            Account = new AccountDto { Id = context.Message.AccountId },
+            TransactionType = context.Message.TransactionType,
+            Amount = context.Message.Amount,
+            CommissionAmount = context.Message.CommissionAmount,
+            Currency = context.Message.Currency,
+            Date = context.Message.Date,
+            AmountInRUB = context.Message.AmountInRUB
         };
 
-        await _transactionsService.AddTransactions(transactionDto);
+        await _transactionsService.AddTransactionsAsync(transactionDto);
     }
 }

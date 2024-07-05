@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ReportingService.Core.Dtos;
-using ReportingService.Core.Enums;
+﻿using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
 

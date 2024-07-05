@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using ReportingService.Api.Consumer;
+using ReportingService.Api.Consumers;
 using ReportingService.Core.Models.Responses;
 
 namespace ReportingService.Api.Configure;
@@ -29,9 +30,19 @@ public static class ConfigureServices
             x.AddConsumer<AccountCreatedConsumer>();
             x.AddConsumer<AccountBlockedConsumer>();
             x.AddConsumer<AccountUpdatedStatusConsumer>();
+            x.AddConsumer<SettingsConsumer>();
 
             x.UsingRabbitMq((context, cfg) =>
             {
+                cfg.ReceiveEndpoint("settings_queue", e =>
+                {
+                    e.Bind("configurations-exchange", x =>
+                    {
+                        x.ExchangeType = "fanout";
+                    });
+                    e.ConfigureConsumer<SettingsConsumer>(context);
+                });
+
                 cfg.ReceiveEndpoint("TransactionCreated", e =>
                 {
                     e.ConfigureConsumer<TransactionsConsumer>(context);
