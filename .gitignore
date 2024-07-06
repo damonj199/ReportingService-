@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 /ReportingService/ReportingService.Api/appsettings.json
 /ReportingService/ReportingService.Api/appsettings.Development.json
+/ReportingService/ReportingService.Api/appsettings.json

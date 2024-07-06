@@ -1,4 +1,5 @@
 using ReportingService.Api.Configure;
+using ReportingService.Api.Configure.Exceptions;
 using ReportingService.Bll;
 using ReportingService.Dal;
 using Serilog;
@@ -6,11 +7,13 @@ using Serilog;
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.Logging.ClearProviders();
 
     Log.Logger = new LoggerConfiguration()
         .ReadFrom.Configuration(builder.Configuration)
-        .CreateLogger();
+    .CreateLogger();
+
+    builder.Configuration.AddJsonFile("appsettings.DefaultConfiguration.json", optional: false, reloadOnChange: true);
+    await builder.Configuration.ReadSettingsFromConfigurationManager();
 
     builder.Services.ConfigureApiServices(builder.Configuration);
     builder.Services.ConfigureBllServices();

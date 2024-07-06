@@ -7,11 +7,13 @@ namespace ReportingService.Api.Configure;
 
 public static class DataBaseExtansions
 {
-    public static void ConfigureDB(this IServiceCollection services, ConfigurationManager configurationManager)
+    public static void ConfigureDB(this IServiceCollection services, IConfiguration configuration)
     {
+        var connectionString = configuration[ConfigurationSettings.DatabaseSettings];
+
         services.AddDbContext<ReportingServiceContext>(
             options => options
-                .UseNpgsql(configurationManager
+                .UseNpgsql(configuration
                 .GetConnectionString("ReportingService"))
                 .UseSnakeCaseNamingConvention());
 
