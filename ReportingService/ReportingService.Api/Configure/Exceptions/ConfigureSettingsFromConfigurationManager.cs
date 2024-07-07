@@ -1,4 +1,5 @@
 ﻿using ReportingService.Bll.HttpClients;
+using ReportingService.Dal;
 
 namespace ReportingService.Api.Configure.Exceptions;
 
@@ -12,11 +13,13 @@ public static class ConfigureSettingsFromConfigurationManager
         return configurationSettings;
     }
 
-    public static async Task ReadSettingsFromConfigurationManager(this IConfiguration configuration)
+    public static async Task<Dictionary<string, string>> ReadSettingsFromConfigurationManager(this IConfiguration configuration)
     {
         var configurationSettings = await GetConfigurationSettings();
         SetValueFromConfigurationManager(configuration.GetSection(ConfigurationSettings.LogPath), configurationSettings);
         configuration.ReadSection(ConfigurationSettings.DatabaseSettings, configurationSettings);
+
+        return configurationSettings;
     }
 
     private static void ReadSection(this IConfiguration configuration, string keySection, Dictionary<string, string> configurationSettings)

@@ -24,9 +24,9 @@ public class TransactionsConsumer : IConsumer<TransactionCreated>
             Account = new AccountDto { Id = context.Message.AccountId },
             TransactionType = context.Message.TransactionType,
             Amount = context.Message.Amount,
-            CommissionAmount = context.Message.CommissionAmount,
-            Currency = context.Message.Currency,
             Date = context.Message.Date,
+            Currency = context.Message.Currency,
+            CommissionAmount = context.Message.CommissionAmount,
             AmountInRUB = context.Message.AmountInRUB
         };
 

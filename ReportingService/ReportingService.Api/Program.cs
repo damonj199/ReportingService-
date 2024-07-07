@@ -8,12 +8,13 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    Log.Logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger();
-
     builder.Configuration.AddJsonFile("appsettings.DefaultConfiguration.json", optional: false, reloadOnChange: true);
     await builder.Configuration.ReadSettingsFromConfigurationManager();
+
+    Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+    builder.Logging.ClearProviders();
 
     builder.Services.ConfigureApiServices(builder.Configuration);
     builder.Services.ConfigureBllServices();
@@ -28,7 +29,9 @@ try
     app.UseHttpsRedirection();
     app.UseAuthorization();
     app.MapControllers();
-    app.Run();
+
+    Log.Information("Running up.");
+    await app.RunAsync();
 }
 catch (Exception ex)
 {

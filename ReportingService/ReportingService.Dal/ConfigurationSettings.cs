@@ -2,5 +2,5 @@
 
 public static class ConfigurationSettings
 {
-    public const string DatabaseContext = "DatabaseSettings:ReportingServiceDb";
+    public const string DatabaseContext = "DatabaseSettings:ReportingService";
 }

@@ -20,9 +20,8 @@ public class SettingsConsumer(IConfiguration configuration) : IConsumer<Configur
         var jsonMessage = JsonSerializer.Serialize(context.Message.Configurations);
 
         _logger.Information($"Configuration message: {jsonMessage} for Reporting_Service");
+
         configuration.UpdateSettingsFromConfigurationManager(context.Message.Configurations);
-        var configurationRoot = (IConfigurationRoot)configuration;
-        configurationRoot.Reload();
 
         return Task.CompletedTask;
     }

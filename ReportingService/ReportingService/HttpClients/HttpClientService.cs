@@ -7,10 +7,6 @@ namespace ReportingService.Bll.HttpClients;
 
 public class HttpClientService : IHttpClientService
 {
-    public HttpClientService()
-    {
-    }
-
     public async Task<T> Get<T>(string urlForRequest, CancellationToken cancellationToken)
     {
         var handler = new HttpClientHandler

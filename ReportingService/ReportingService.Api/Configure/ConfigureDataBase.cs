@@ -11,10 +11,12 @@ public static class DataBaseExtansions
     {
         var connectionString = configuration[ConfigurationSettings.DatabaseSettings];
 
+        var dataSourceBuilder = new NpgsqlConnectionStringBuilder(connectionString);
+        var dataSource = dataSourceBuilder.ConnectionString;
+
         services.AddDbContext<ReportingServiceContext>(
             options => options
-                .UseNpgsql(configuration
-                .GetConnectionString("ReportingService"))
+                .UseNpgsql(dataSource)
                 .UseSnakeCaseNamingConvention());
 
         NpgsqlConnection.GlobalTypeMapper.MapEnum<Currency>();

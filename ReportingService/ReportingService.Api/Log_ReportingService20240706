@@ -1,9 +1,0 @@
-2024-07-06 16:13:36.667 +03:00 [FTL [] Failed to load configuration from file 'C:\Users\admin\Desktop\ReportingService-\ReportingService\ReportingService.Api\appsettings.DefaultConfiguration.json'.
-]2024-07-06 22:26:58.505 +03:00 [FTL [] The configuration file 'appsettings.DefaultConfiguration.json' was not found and is not optional. The expected physical path was 'C:\Users\admin\Desktop\ReportingService-\ReportingService\ReportingService.Api\appsettings.DefaultConfiguration.json'.
-]2024-07-06 22:27:14.379 +03:00 [FTL [] The configuration file 'appsettings.DefaultConfiguration.json' was not found and is not optional. The expected physical path was 'C:\Users\admin\Desktop\ReportingService-\ReportingService\ReportingService.Api\appsettings.DefaultConfiguration.json'.
-]2024-07-06 22:27:30.833 +03:00 [FTL [] The configuration file 'appsettings.DefaultConfiguration.json' was not found and is not optional. The expected physical path was 'C:\Users\admin\Desktop\ReportingService-\ReportingService\ReportingService.Api\appsettings.DefaultConfiguration.json'.
-]2024-07-06 22:28:33.486 +03:00 [FTL [] The configuration file 'appsettings.DefaultConfiguration.json' was not found and is not optional. The expected physical path was 'C:\Users\admin\Desktop\ReportingService-\ReportingService\ReportingService.Api\appsettings.DefaultConfiguration.json'.
-]2024-07-06 22:32:46.575 +03:00 [FTL [] Configuration manager variables are not specified
-]2024-07-06 22:40:33.274 +03:00 [FTL [] Configuration manager variables are not specified
-]2024-07-06 22:57:59.764 +03:00 [FTL [] Configuration manager variables are not specified
-]
