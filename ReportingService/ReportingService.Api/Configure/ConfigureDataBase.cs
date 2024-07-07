@@ -9,7 +9,7 @@ public static class DataBaseExtansions
 {
     public static void ConfigureDB(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration[ConfigurationSettings.DatabaseSettings];
+        var connectionString = configuration["DatabaseSettings:ReportingService"];
 
         var dataSourceBuilder = new NpgsqlConnectionStringBuilder(connectionString);
         var dataSource = dataSourceBuilder.ConnectionString;
