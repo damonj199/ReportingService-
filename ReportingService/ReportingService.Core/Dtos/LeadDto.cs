@@ -14,5 +14,4 @@ public class LeadDto
     public int? Day { get; set; }
     public LeadStatus? Status { get; set; }
     public List<AccountDto>? Accounts { get; set; }
-    public List<StatusHistoryDto>? StatusHistory { get; set; }
 }

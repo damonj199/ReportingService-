@@ -17,13 +17,13 @@ public class AccountsService : IAccountsService
 
     public async Task UpdateAccountAsync(AccountDto account)
     {
-        _logger.Information("Берем данные и отдаем в репозиторий для обновления аккаунта");
+        _logger.Information("We take the data and send it to the repository to update the account");
         await _accountRepository.UpdateAccountAsync(account);
     }
 
     public async Task<Guid> AddAccountAsync(AccountDto account)
     {
-        _logger.Information($"Account {account.Id}");
+        _logger.Information($"New Account created service -> Repository {account.Id}");
         await _accountRepository.AddAccountAsync(account);
 
         return account.Id;

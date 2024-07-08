@@ -16,7 +16,7 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
         await _cxt.Accounts.AddAsync(account);
         await _cxt.SaveChangesAsync();
 
-        _logger.Information("Добавили новый аккаунт");
+        _logger.Information($"Add new Acc for Leads. New Acc_id {account.Id}");
 
         return account.Id;
     }
@@ -26,7 +26,7 @@ public class AccountsRepository : BaseRepository, IAccountsRepository
         _cxt.Accounts.Update(account);
         await _cxt.SaveChangesAsync();
 
-        _logger.Information("Информация о аккаунте обновлена");
+        _logger.Information($"Information on Account updated {account.LeadId}");
     }
 
     //public async Task BlockedAccount(AccountDto account)

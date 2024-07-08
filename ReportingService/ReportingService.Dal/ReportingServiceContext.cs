@@ -10,7 +10,6 @@ public class ReportingServiceContext : DbContext
     public DbSet<AccountDto> Accounts { get; set; }
     public DbSet<LeadDto> Leads { get; set; }
     public DbSet<TransactionDto> Transactions { get; set; }
-    public DbSet<StatusHistoryDto> StatusHistory { get; set; }
 
     public ReportingServiceContext(DbContextOptions<ReportingServiceContext> options) : base(options)
     {
@@ -25,12 +24,17 @@ public class ReportingServiceContext : DbContext
         modelBuilder.Entity<TransactionDto>(ConfigureTransactionDto);
         modelBuilder.Entity<LeadDto>(ConfigureLeadDto);
         modelBuilder.Entity<AccountDto>(ConfigureAccountDto);
-        modelBuilder.Entity<StatusHistoryDto>(ConfigureStatusHistoryDto);
 
     }
     private void ConfigureTransactionDto(EntityTypeBuilder<TransactionDto> builder)
     {
         builder.Property(t => t.Amount)
+            .HasPrecision(11, 4);
+
+        builder.Property(t => t.CommissionAmount)
+            .HasPrecision(11, 4);
+
+        builder.Property(t => t.AmountInRUB)
             .HasPrecision(11, 4);
     }
 
@@ -68,12 +72,5 @@ public class ReportingServiceContext : DbContext
     {
         builder.HasMany(a => a.Transactions)
             .WithOne(t => t.Account);
-
-        
-    }
-    private void ConfigureStatusHistoryDto(EntityTypeBuilder<StatusHistoryDto> builder)
-    {
-        builder.HasOne(s => s.Lead)
-             .WithMany(l => l.StatusHistory);
     }
 }

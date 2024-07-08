@@ -17,10 +17,10 @@ public class ReportController : Controller
         _leadService = leadService;
     }
 
-    [HttpGet("/lead-fullInfo-byId/{id}")]
+    [HttpGet("/lead-fullInfo-byId")]
     public async Task<ActionResult<LeadResponse>> GetLeadFullInfoByIdAsync(Guid id)
     {
-        _logger.Information("передаем id в сервис для поиска лида");
+        _logger.Information("Get lead with full information by id -> service");
         var leadId = await _leadService.GetLeadFullInfoByIdAsync(id);
 
         return Ok(leadId);
@@ -29,7 +29,7 @@ public class ReportController : Controller
     [HttpGet("/leads-birthdate")]
     public async Task<ActionResult<List<LeadsBirthDateResponse>>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
-        _logger.Information("идем в сервис за данными");
+        _logger.Information("Let's go -> service to look for someone's birthday");
         var leads = await _leadService.GetLeadsWithBirthdayAsync(periodBdate);
 
         return Ok(leads);

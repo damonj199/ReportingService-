@@ -13,8 +13,8 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240701132841_AddCurrencyType")]
-    partial class AddCurrencyType
+    [Migration("20240708143433_updateDb")]
+    partial class updateDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,15 +37,15 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Currency>("Currency")
+                    b.Property<Currency?>("Currency")
                         .HasColumnType("currency")
                         .HasColumnName("currency");
 
-                    b.Property<Guid>("LeadId")
+                    b.Property<Guid?>("LeadId")
                         .HasColumnType("uuid")
                         .HasColumnName("lead_id");
 
-                    b.Property<AccountStatus>("Status")
+                    b.Property<AccountStatus?>("Status")
                         .HasColumnType("account_status")
                         .HasColumnName("status");
 
@@ -71,7 +71,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("address");
 
-                    b.Property<DateOnly>("BirthDate")
+                    b.Property<DateOnly?>("BirthDate")
                         .HasColumnType("date")
                         .HasColumnName("birth_date");
 
@@ -101,7 +101,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("character varying(12)")
                         .HasColumnName("phone");
 
-                    b.Property<LeadStatus>("Status")
+                    b.Property<LeadStatus?>("Status")
                         .HasColumnType("lead_status")
                         .HasColumnName("status");
 
@@ -146,7 +146,7 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("AccountId")
+                    b.Property<Guid?>("AccountId")
                         .HasColumnType("uuid")
                         .HasColumnName("account_id");
 
@@ -154,6 +154,14 @@ namespace ReportingService.Dal.Migrations
                         .HasPrecision(11, 4)
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
+
+                    b.Property<decimal?>("AmountInRUB")
+                        .HasColumnType("numeric")
+                        .HasColumnName("amount_in_rub");
+
+                    b.Property<decimal>("CommissionAmount")
+                        .HasColumnType("numeric")
+                        .HasColumnName("commission_amount");
 
                     b.Property<Currency?>("Currency")
                         .HasColumnType("currency")
@@ -181,8 +189,6 @@ namespace ReportingService.Dal.Migrations
                     b.HasOne("ReportingService.Core.Dtos.LeadDto", "Lead")
                         .WithMany("Accounts")
                         .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_accounts_leads_lead_id");
 
                     b.Navigation("Lead");
@@ -205,8 +211,6 @@ namespace ReportingService.Dal.Migrations
                     b.HasOne("ReportingService.Core.Dtos.AccountDto", "Account")
                         .WithMany("Transactions")
                         .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_transactions_accounts_account_id");
 
                     b.Navigation("Account");

@@ -28,7 +28,7 @@ public class TransactionsService : ITransactionsService
     }
     public async Task<TransactionResponse> GetTransactionByIdsAsync(Guid id)
     {
-        _logger.Information("ReportingService - TransactionsService - GetInformationAllTransaction");
+        _logger.Information("Get transaction by id -> repository");
         TransactionDto transactions = await _transactionRepository.GetTransactionByIdAsync(id);
 
         return _mapper.Map<TransactionResponse>(transactions);
@@ -37,7 +37,7 @@ public class TransactionsService : ITransactionsService
 
     public async Task<List<TransactionResponse>> GetTransactionsByPeriodDayAsync(int countDays)
     {
-        _logger.Information($"ReportingService - TransactionController - GetTransactionsByAccountIdAsynk");
+        _logger.Information($"go to -> repository to look for all transactions for {countDays} days");
         List<TransactionDto> transactions = await _transactionRepository.GetTransactionsByPeriodDayAsync(countDays);
 
         return _mapper.Map<List<TransactionResponse>>(transactions);
@@ -45,7 +45,7 @@ public class TransactionsService : ITransactionsService
 
     public async Task<List<NegativBalanceResponse>> GetAccountsNegativBalanceAsync()
     {
-        _logger.Information("обращаемся к репозиторию, с методом получения акк");
+        _logger.Information("Let's go -> repository look for accounts with a negative balance");
         List<AccountNegativBalanceDto> negBalance = await _transactionRepository.GetAccountsWithNegativeBalanceAsync();
 
         return _mapper.Map<List<NegativBalanceResponse>>(negBalance);

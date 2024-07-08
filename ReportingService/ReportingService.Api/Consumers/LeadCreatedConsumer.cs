@@ -19,7 +19,7 @@ public class LeadCreatedConsumer : IConsumer<LeadCreated>
     }
     public async Task Consume(ConsumeContext<LeadCreated> context)
     {
-        _logger.Information("Received message: lead created {Text}", context.Message.Name);
+        _logger.Information("Received message: lead created {0}{1}", context.Message.Name, context.Message.Id);
 
         var lead = new LeadDto
         {
@@ -35,6 +35,8 @@ public class LeadCreatedConsumer : IConsumer<LeadCreated>
         };
 
         await _leadService.AddLeadAsync(lead);
+        _logger.Information("Add and save lead");
+
         foreach (var accountDto in context.Message.Accounts.Select(account => new AccountDto
         {
             Id = account.Id,
@@ -43,5 +45,6 @@ public class LeadCreatedConsumer : IConsumer<LeadCreated>
             LeadId = account.LeadId,
         }))
         { await _accountsService.AddAccountAsync(accountDto); }
+        _logger.Information("Add and save acc defauilt");
     }
 }

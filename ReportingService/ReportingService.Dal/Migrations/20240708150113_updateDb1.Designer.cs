@@ -13,8 +13,8 @@ using ReportingService.Dal;
 namespace ReportingService.Dal.Migrations
 {
     [DbContext(typeof(ReportingServiceContext))]
-    [Migration("20240702230156_UpdateTransaction")]
-    partial class UpdateTransaction
+    [Migration("20240708150113_updateDb1")]
+    partial class updateDb1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,34 +111,6 @@ namespace ReportingService.Dal.Migrations
                     b.ToTable("leads", (string)null);
                 });
 
-            modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_date");
-
-                    b.Property<Guid>("LeadId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("lead_id");
-
-                    b.Property<LeadStatus>("Status")
-                        .HasColumnType("lead_status")
-                        .HasColumnName("status");
-
-                    b.HasKey("Id")
-                        .HasName("pk_status_history");
-
-                    b.HasIndex("LeadId")
-                        .HasDatabaseName("ix_status_history_lead_id");
-
-                    b.ToTable("status_history", (string)null);
-                });
-
             modelBuilder.Entity("ReportingService.Core.Dtos.TransactionDto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -155,12 +127,14 @@ namespace ReportingService.Dal.Migrations
                         .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount");
 
-                    b.Property<decimal>("AmountInRUB")
-                        .HasColumnType("numeric")
+                    b.Property<decimal?>("AmountInRUB")
+                        .HasPrecision(11, 4)
+                        .HasColumnType("numeric(11,4)")
                         .HasColumnName("amount_in_rub");
 
                     b.Property<decimal>("CommissionAmount")
-                        .HasColumnType("numeric")
+                        .HasPrecision(11, 4)
+                        .HasColumnType("numeric(11,4)")
                         .HasColumnName("commission_amount");
 
                     b.Property<Currency?>("Currency")
@@ -194,18 +168,6 @@ namespace ReportingService.Dal.Migrations
                     b.Navigation("Lead");
                 });
 
-            modelBuilder.Entity("ReportingService.Core.Dtos.StatusHistoryDto", b =>
-                {
-                    b.HasOne("ReportingService.Core.Dtos.LeadDto", "Lead")
-                        .WithMany("StatusHistory")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_status_history_leads_lead_id");
-
-                    b.Navigation("Lead");
-                });
-
             modelBuilder.Entity("ReportingService.Core.Dtos.TransactionDto", b =>
                 {
                     b.HasOne("ReportingService.Core.Dtos.AccountDto", "Account")
@@ -224,8 +186,6 @@ namespace ReportingService.Dal.Migrations
             modelBuilder.Entity("ReportingService.Core.Dtos.LeadDto", b =>
                 {
                     b.Navigation("Accounts");
-
-                    b.Navigation("StatusHistory");
                 });
 #pragma warning restore 612, 618
         }

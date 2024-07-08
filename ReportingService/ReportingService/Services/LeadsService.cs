@@ -20,7 +20,7 @@ public class LeadsService : ILeadsService
 
     public async Task<LeadResponse> GetLeadFullInfoByIdAsync(Guid id)
     {
-        _logger.Information("вызываем репозитория для поиска лида по id");
+        _logger.Information("Let's go -> repository to look for leads full informations by id");
         var leadId = await _leadRepository.GetLeadFullInfoByIdAsync(id);
 
         return _mapper.Map<LeadResponse>(leadId);
@@ -28,7 +28,7 @@ public class LeadsService : ILeadsService
 
     public async Task<List<LeadsBirthDateResponse>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
-        _logger.Information("Идем в репозиторий искать лидов у кого др");
+        _logger.Information("Let's go -> repository, to look for leads who have a birthday");
         var leadsBdate = await _leadRepository.GetLeadsWithBirthdayAsync(periodBdate);
 
         return _mapper.Map<List<LeadsBirthDateResponse>>(leadsBdate);
@@ -36,20 +36,20 @@ public class LeadsService : ILeadsService
 
     public async Task<LeadDto> AddLeadAsync(LeadDto lead)
     {
-        _logger.Information("идем в репозиторий, что бы добавить лида в БД");
+        _logger.Information("Add new Lead -> repository");
         await _leadRepository.AddLeadAsync(lead);
         return lead;
     }
 
     public async Task UpdateLeadAsync(LeadDto lead)
     {
-        _logger.Information("передаем данные в репозиторий для обновления");
+        _logger.Information("Send the data to Repository for updated lead");
         await _leadRepository.UpdateLeadAsync(lead);
     }
 
     public async Task DeletedLeadAsync(LeadDto lead)
     {
-        _logger.Information("Передаем данные в репозиторий для удаления лида");
+        _logger.Information("Send the data to Repository for deleted lead");
         await _leadRepository.DeleteLeadAsync(lead);
     }
 }

@@ -17,7 +17,7 @@ public class LeadStatusUpdatedConsumer : IConsumer<LeadStatusUpdated>
     }
     public async Task Consume(ConsumeContext<LeadStatusUpdated> context)
     {
-        _logger.Information("Received message: update status {Text}", context.Message.Status);
+        _logger.Information("Received message: update lead status {Text}", context.Message.Status);
 
         var lead = new LeadDto { Status = context.Message.Status };
         

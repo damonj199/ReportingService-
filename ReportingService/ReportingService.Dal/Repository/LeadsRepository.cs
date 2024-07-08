@@ -20,16 +20,10 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
             .ThenInclude(at => at.Transactions)
             .FirstOrDefaultAsync(a => a.Id == id);
 
-        _logger.Information("Достали все данные по лиду из базы");
+        _logger.Information("received complete information on lead Id");
 
         return leadId;
     }
-
-    //public async Task<LeadDto> GetLeadByIdAsync(Guid id)
-    //{
-    //    _logger.Information("Ищем лида по id");
-    //    return await _cxt.Leads.FirstOrDefaultAsync(a => a.Id == id);
-    //}
 
     public async Task<List<LeadDto>> GetLeadsWithBirthdayAsync(int periodBdate)
     {
@@ -53,15 +47,15 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
     {
         _cxt.Leads.Update(leadDto);
         await _cxt.SaveChangesAsync();
-        _logger.Information($"Данные пользователя {leadDto.Id} обновлены");
+        _logger.Information($"Lead data {leadDto.Id} updated");
     }
 
     public async Task<Guid> AddLeadAsync(LeadDto lead)
     {
-        await _cxt.Leads.AddAsync(lead);
+        _cxt.Leads.AddAsync(lead);
         await _cxt.SaveChangesAsync();
 
-        _logger.Information($"Добавлен новый пользователь {lead.Name}");
+        _logger.Information($"Add new lead {lead.Name}, {lead.Id}");
 
         return lead.Id;
     }
@@ -71,6 +65,6 @@ public class LeadsRepository : BaseRepository, ILeadsRepository
         _cxt.Leads.Remove(lead);
         await _cxt.SaveChangesAsync();
 
-        _logger.Information("Пользователь удален успешно!");
+        _logger.Information("Lead deleted");
     }
 }

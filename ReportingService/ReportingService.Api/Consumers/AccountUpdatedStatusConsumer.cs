@@ -17,7 +17,7 @@ public class AccountUpdatedStatusConsumer : IConsumer<AccountUpdatedStatus>
     }
     public async Task Consume(ConsumeContext<AccountUpdatedStatus> context)
     {
-        _logger.Information("Received message: update status {Text}", context.Message.Status);
+        _logger.Information("Received message: update account status {Text}", context.Message.Status);
 
         var accountUpdatedStatus = new AccountDto { Id = context.Message.Id, Status = context.Message.Status };
 

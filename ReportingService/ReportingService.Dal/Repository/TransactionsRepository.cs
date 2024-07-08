@@ -1,5 +1,4 @@
-﻿using Messaging.Shared;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ReportingService.Core.Dtos;
 using ReportingService.Dal.IRepository;
 using Serilog;
@@ -16,7 +15,7 @@ namespace ReportingService.Dal.Repository
 
         public async Task<TransactionDto> GetTransactionByIdAsync(Guid id)
         {
-            _logger.Information("ReportingService - TransactiontRepository - GetInformationAllTransaction");
+            _logger.Information("receiving in Db transactions by id");
             return await _cxt.Transactions
                 .AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
         }
@@ -25,7 +24,7 @@ namespace ReportingService.Dal.Repository
         {
             DateTime startDate = DateTime.UtcNow.AddDays(-countDays);
 
-            _logger.Information("ReportingService - TransactiontRepository - GetTransactionsByAccountIdAsynk");
+            _logger.Information("receiving in Db transactions for a period");
 
             var transactions = _cxt.Transactions.Include(a => a.Account)
                 .AsNoTracking()
@@ -36,7 +35,7 @@ namespace ReportingService.Dal.Repository
 
         public async Task<List<AccountNegativBalanceDto>> GetAccountsWithNegativeBalanceAsync()
         {
-            _logger.Information("Идем в базу искать акк с отрицательным балансом");
+            _logger.Information("search for accounts in the database with negative balances");
             var acc = _cxt.Transactions
                 .AsNoTracking()
                 .GroupBy(a => a.Account.Id)
@@ -47,18 +46,19 @@ namespace ReportingService.Dal.Repository
                 })
                 .Where(t => t.Sum < 0);
 
-             return await acc.ToListAsync();
+            return await acc.ToListAsync();
         }
 
         public async Task<TransactionDto> AddTransactionsAsync(TransactionDto transaction)
         {
             _logger.Information($"polychili dto s service {transaction.Date}");
 
-            await _cxt.Transactions.AddAsync(transaction);
+            _cxt.Transactions.AddAsync(transaction);
             _logger.Information($"dobavlyem v dataBase {transaction.Currency}");
+            _logger.Information($"Add transactions for data {transaction.Id}, {transaction.Account}");
             await _cxt.SaveChangesAsync();
+            _logger.Information($"Saving the transaction in the database. {transaction.Id}");
 
-            _logger.Information($"Saving the transaction in the database. {transaction.Id} / Сохранение транзакции в базе.");
             return transaction;
         }
     }
