@@ -16,7 +16,7 @@ public class SettingsConsumer(IConfiguration configuration) : IConsumer<Configur
         {
             return Task.CompletedTask;
         }
-
+        
         var jsonMessage = JsonSerializer.Serialize(context.Message.Configurations);
 
         _logger.Information($"Configuration message: {jsonMessage} for Reporting_Service");

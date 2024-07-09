@@ -28,7 +28,7 @@ namespace ReportingService.Api.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("by-period/{countDays}")]
+        [HttpGet("by-period/")]
         public async Task<ActionResult<List<TransactionResponse>>> GetTransactionsByPeriodDayAsync(int countDays)
         {
             _logger.Information($"we will look for transactions for the period {countDays} days");

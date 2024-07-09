@@ -34,7 +34,7 @@ public static class ConfigureServices
 
             x.UsingRabbitMq((context, cfg) =>
             {
-                cfg.ReceiveEndpoint("settings_queue", e =>
+                cfg.ReceiveEndpoint("settings_reporting", e =>
                 {
                     e.Bind("configurations-exchange", x =>
                     {

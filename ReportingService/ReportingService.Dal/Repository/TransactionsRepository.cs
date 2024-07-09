@@ -26,17 +26,17 @@ namespace ReportingService.Dal.Repository
 
             _logger.Information("receiving in Db transactions for a period");
 
-            var transactions = _cxt.Transactions.Include(a => a.Account)
+            return await _cxt.Transactions
+                .Include(a => a.Account)
                 .AsNoTracking()
-                .Where(t => t.Date >= startDate);
-
-            return await transactions.ToListAsync();
+                .Where(t => t.Date >= startDate)
+                .ToListAsync();
         }
 
         public async Task<List<AccountNegativBalanceDto>> GetAccountsWithNegativeBalanceAsync()
         {
             _logger.Information("search for accounts in the database with negative balances");
-            var acc = _cxt.Transactions
+            return await _cxt.Transactions
                 .AsNoTracking()
                 .GroupBy(a => a.Account.Id)
                 .Select(j => new AccountNegativBalanceDto
@@ -44,18 +44,20 @@ namespace ReportingService.Dal.Repository
                     AccountId = j.Key,
                     Sum = j.Sum(t => t.Amount)
                 })
-                .Where(t => t.Sum < 0);
-
-            return await acc.ToListAsync();
+                .Where(t => t.Sum < 0)
+                .Take(5000)
+                .ToListAsync();
         }
 
         public async Task<TransactionDto> AddTransactionsAsync(TransactionDto transaction)
         {
             _logger.Information($"polychili dto s service {transaction.Date}");
 
-            _cxt.Transactions.AddAsync(transaction);
+            await _cxt.Transactions.AddAsync(transaction);
             _logger.Information($"dobavlyem v dataBase {transaction.Currency}");
-            _logger.Information($"Add transactions for data {transaction.Id}, {transaction.Account}");
+            _logger.Information($"Add transactions for data {transaction.Id}, {transaction.AccountId}, {transaction.TransactionType}," +
+                $" {transaction.Amount}, {transaction.Date}, {transaction.Currency}, {transaction.CommissionAmount}, {transaction.AmountInRUB}");
+
             await _cxt.SaveChangesAsync();
             _logger.Information($"Saving the transaction in the database. {transaction.Id}");
 
