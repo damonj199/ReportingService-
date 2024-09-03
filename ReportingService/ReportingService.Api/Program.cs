@@ -1,25 +1,43 @@
-var builder = WebApplication.CreateBuilder(args);
+using ReportingService.Api.Configure;
+using ReportingService.Api.Configure.Exceptions;
+using ReportingService.Bll;
+using ReportingService.Dal;
+using Serilog;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
+    var builder = WebApplication.CreateBuilder(args);
+
+    builder.Configuration.AddJsonFile("appsettings.DefaultConfiguration.json", optional: false, reloadOnChange: true);
+    await builder.Configuration.ReadSettingsFromConfigurationManager();
+
+    Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+    builder.Logging.ClearProviders();
+
+    builder.Services.ConfigureApiServices(builder.Configuration);
+    builder.Services.ConfigureBllServices();
+    builder.Services.ConfigureDalServices();
+
+    var app = builder.Build();
+    app.UseMiddleware<ExceptionMiddleware>();
+
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+
+    Log.Information("Running up.");
+    await app.RunAsync();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex.Message);
+}
+finally
+{
+    Log.CloseAndFlush();
+}
